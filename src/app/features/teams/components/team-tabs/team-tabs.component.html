@@ -1,0 +1,15 @@
+<mat-tab-group [(selectedIndex)]="selectedTabIndex">
+  <mat-tab label="Listes des équipes">
+    <app-view-teams (deleteTeamEvent)="onDeleteTeam($event)" (updateTeamEvent)="onUpdateTeamEvent($event)" [paginatedResourceTeams]="_paginatedResource()" (handlePageEvent)="handlePageEvent($event)"></app-view-teams>
+  </mat-tab>
+  @if(_paginatedResource().hasTemplate("createTeam")) {
+    <mat-tab label="Ajouter une équipe">
+      <app-form-team (submitSaveTeam)="onSubmitSaveTeam($event)"></app-form-team>
+    </mat-tab>
+  }
+  @if(_teamUpdating()!==undefined) {
+    <mat-tab label="Modifier une équipe">
+      <app-form-team (submitUpdateTeam)="onSubmitUpdateTeam($event)" [team]="_teamUpdating()"></app-form-team>
+    </mat-tab>
+  }
+</mat-tab-group>

@@ -1,0 +1,20 @@
+/**
+ * Ajuste la couleur en modifiant sa luminosité.
+ * Assombrit les couleurs claires et éclaircit les couleurs sombres.
+ *
+ * @param $color La couleur à ajuster.
+ * @return La couleur ajustée, soit assombrie soit éclaircie.
+ */
+@function adjust-color($color) {
+  // Calcule la luminosité de la couleur donnée.
+  $lightness: lightness($color);
+
+  // Vérifie si la couleur est claire (luminosité > 50%).
+  @if $lightness > 50% {
+    // Assombrit la couleur de 20% si elle est claire.
+    @return darken($color, 20%);
+  } @else {
+    // Éclaircit la couleur de 20% si elle est sombre.
+    @return lighten($color, 20%);
+  }
+}

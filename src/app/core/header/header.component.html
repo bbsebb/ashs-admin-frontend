@@ -1,0 +1,27 @@
+
+  <mat-toolbar color="primary" [@toolbarAnimation]="showToolbar()? 'open':'close'">
+
+      <span class="left-menu">
+        <button (click)="sidenavOpeningService.toggle()" mat-icon-button id="navbar-toggle-button" aria-label="Example icon-button with menu icon">
+          @if(sidenavOpeningService.isOpen()) {
+            <mat-icon>close</mat-icon>
+          } @else {
+            <mat-icon>menu</mat-icon>
+          }
+        </button>
+        ADMIN
+      </span>
+
+      <a class="logo" routerLink="/">
+
+      </a>
+
+<!--      <span class="right-menu">
+        <button  mat-icon-button  aria-label="icon-button with login icon">
+        <mat-icon>login</mat-icon>
+        </button>
+      </span>-->
+
+  </mat-toolbar>
+
+

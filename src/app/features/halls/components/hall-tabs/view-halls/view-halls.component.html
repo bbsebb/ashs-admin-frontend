@@ -1,0 +1,18 @@
+<div>
+  <div class="coach-card-list">
+    @for(hall of _paginatedResourceHalls().getEmbedded("halls")  ; track hall.getSelfLink().href) {
+      <app-hall-card [hall]="hall" (deleteHall)="onDeleteHallEvent($event)" (modifyHall)="onModifyHallEvent($event)"></app-hall-card>
+    }
+  </div>
+
+  <mat-paginator
+    [length]="_paginatedResourceHalls().page.totalElements"
+    [pageSize]="_paginatedResourceHalls().page.size"
+    [pageIndex]="_paginatedResourceHalls().page.number"
+    (page)="onHandlePageEvent($event)"
+
+    [showFirstLastButtons]="true"
+    [pageSizeOptions]="[5, 10, 50]"
+  ></mat-paginator>
+
+</div>

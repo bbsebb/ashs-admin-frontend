@@ -1,0 +1,8 @@
+mat-sidenav{
+  position: fixed;
+  top:80px;
+}
+
+mat-sidenav-content{
+  margin-top:100px; /* 80px header + 20px */
+}

@@ -1,0 +1,18 @@
+<div>
+  <div class="coach-card-list">
+    @for(coach of _paginatedResourceCoaches().getEmbedded("coaches")  ; track coach.getSelfLink().href) {
+      <app-coach-card [coach]="coach" (deleteCoach)="onDeleteCoachEvent($event)" (modifyCoach)="onModifyCoachEvent($event)"></app-coach-card>
+    }
+  </div>
+
+  <mat-paginator
+    [length]="_paginatedResourceCoaches().page.totalElements"
+    [pageSize]="_paginatedResourceCoaches().page.size"
+    [pageIndex]="_paginatedResourceCoaches().page.number"
+    (page)="onHandlePageEvent($event)"
+
+    [showFirstLastButtons]="true"
+    [pageSizeOptions]="[5, 10, 50]"
+  ></mat-paginator>
+
+</div>

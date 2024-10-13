@@ -1,0 +1,22 @@
+<mat-card>
+  <mat-card-header>
+    <div mat-card-avatar class="example-header-image"></div>
+    <mat-card-title>{{hallSignal().name}} </mat-card-title>
+
+  </mat-card-header>
+  <mat-card-content>
+    <p>{{ hallSignal().address.street }}</p>
+    <p>{{ hallSignal().address.postalCode }} {{ hallSignal().address.city }}</p>
+
+
+  </mat-card-content>
+  <mat-card-actions [align]="'end'">
+    @if(hallSignal().getTemplate("updateHall")) {
+      <button mat-button (click)="onModify()">Modifier</button>
+    }
+    @if(hallSignal().getTemplate("deleteHall")) {
+      <button mat-button (click)="onDelete()">Supprimer</button>
+    }
+  </mat-card-actions>
+</mat-card>
+<google-map></google-map>

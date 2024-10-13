@@ -1,0 +1,15 @@
+<mat-card class="coach-card">
+  <mat-card-header>
+    <div mat-card-avatar class="example-header-image"></div>
+    <mat-card-title>{{_team().category}} </mat-card-title>
+
+  </mat-card-header>
+  <mat-card-actions [align]="'end'">
+    @if(_team().getTemplate("updateTeam")) {
+      <button mat-button (click)="onModify()">Modifier</button>
+    }
+    @if(_team().getTemplate("deleteTeam")) {
+      <button mat-button (click)="onDelete()">Supprimer</button>
+    }
+  </mat-card-actions>
+</mat-card>

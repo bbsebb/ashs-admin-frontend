@@ -1,0 +1,26 @@
+mat-card {
+  max-width: 400px;
+  margin: 20px auto;
+
+  mat-card-header {
+    mat-card-title {
+      font-weight: bold;
+      font-size: 1.4em;
+      color: #3f51b5;
+    }
+  }
+
+  mat-card-content {
+    p {
+      display: flex;
+      align-items: center;
+      margin: 8px 0;
+      font-size: 1.1em;
+
+      mat-icon {
+        margin-right: 8px;
+        color: #3f51b5;
+      }
+    }
+  }
+}

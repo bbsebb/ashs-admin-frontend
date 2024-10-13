@@ -1,0 +1,16 @@
+<mat-tab-group [(selectedIndex)]="selectedTabIndex">
+  <mat-tab label="Listes des créneaux">
+    <app-view-training-sessions (deleteTrainingSessionEvent)="onDeleteTrainingSession($event)" (updateTrainingSessionEvent)="onUpdateTrainingSessionEvent($event)" [paginatedResourceTrainingSessions]="_paginatedResource()" (handlePageEvent)="handlePageEvent($event)"></app-view-training-sessions>
+  </mat-tab>
+  @if(_paginatedResource().hasTemplate("createTrainingSession")) {
+    <mat-tab label="Ajouter un créneau">
+      <app-form-training-session (submitSaveTrainingSession)="onSubmitSaveTrainingSession($event)"></app-form-training-session>
+    </mat-tab>
+  }
+
+  @if(_trainingSessionUpdating()!==undefined) {
+    <mat-tab label="Modifier un créneau">
+      <app-form-training-session (submitUpdateTrainingSession)="onSubmitUpdateTrainingSession($event)" [trainingSession]="_trainingSessionUpdating()"></app-form-training-session>
+    </mat-tab>
+  }
+</mat-tab-group>

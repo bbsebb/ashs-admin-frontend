@@ -1,0 +1,54 @@
+<mat-card>
+  <mat-card-title>Enregistrement Séance d'Entraînement</mat-card-title>
+  <form [formGroup]="trainingSessionForm" (ngSubmit)="onSubmit()">
+
+    <!-- Day of Week -->
+    <mat-form-field class="full-width" appearance="outline">
+      <mat-label>Sélectionnez un jour</mat-label>
+      <mat-select formControlName="dayOfWeek">
+        @for(day of Object.values(DayOfWeek); track day) {
+          <mat-option [value]="day">{{ day }}</mat-option>
+        }
+      </mat-select>
+      @if (hasError('dayOfWeek')) {
+        <mat-error>{{ displayError('dayOfWeek') }}</mat-error>
+      }
+    </mat-form-field>
+
+    <!-- Start Time -->
+    <mat-form-field class="full-width" appearance="outline">
+      <mat-label>Heure de début</mat-label>
+      <input matInput placeholder="Heure de début" type="time" formControlName="startTime" />
+      @if (hasError('startTime')) {
+        <mat-error>{{ displayError('startTime') }}</mat-error>
+      }
+    </mat-form-field>
+
+    <!-- End Time -->
+    <mat-form-field class="full-width" appearance="outline">
+      <mat-label>Heure de fin</mat-label>
+      <input matInput placeholder="Heure de fin" type="time" formControlName="endTime" />
+      @if (hasError('endTime')) {
+        <mat-error>{{ displayError('endTime') }}</mat-error>
+      }
+    </mat-form-field>
+
+    <!-- Hall (Select existing Hall) -->
+    <mat-form-field class="full-width" appearance="outline">
+      <mat-label>Sélectionnez la salle</mat-label>
+      <mat-select formControlName="hall">
+        @for (hall of _hallList()?.getEmbedded("halls");track hall) {
+          <mat-option [value]="hall">{{ hall.name }}</mat-option>
+        }
+      </mat-select>
+      @if (hasError('hall')) {
+        <mat-error>{{ displayError('hall') }}</mat-error>
+      }
+    </mat-form-field>
+
+    <!-- Submit Button -->
+    <div class="form-actions">
+      <button mat-raised-button color="primary" type="submit" [disabled]="trainingSessionForm.invalid">Soumettre</button>
+    </div>
+  </form>
+</mat-card>

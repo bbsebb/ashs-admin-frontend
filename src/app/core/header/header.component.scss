@@ -1,0 +1,62 @@
+@use 'styles/theme' as variables;
+@use '@angular/material' as mat;
+
+$background_color: mat.get-theme-color(variables.$my-theme, primary);
+
+mat-toolbar {
+
+  height: 80px;
+  position: fixed;
+  padding-left: calc(20px + (100% - 1200px) / 2);
+  padding-right: calc(20px + (100% - 1200px) / 2);
+  box-shadow: 0 4px 8px rgba(darken($background_color, 20%), 0.2);
+  z-index: 1000;
+
+  > * {
+    display: flex;
+    align-items: center;
+  }
+
+  .left-menu {
+    max-width: 50%;
+    flex-grow: 2;
+  }
+
+  .right-menu {
+    max-width: 50%;
+    display: flex;
+    justify-content: flex-end;
+    flex-grow: 2;
+  }
+
+  .logo {
+    margin: 0 10px;
+    border: 1px solid #000;
+    border-radius: 50%;
+    padding: 2px;
+    background-color: grey;
+    background-image: url('/assets/logo.png');
+    background-size: cover; /* Ajustez selon le besoin pour remplir le conteneur */
+    background-position: center;
+    width: 55px; /* Assurez-vous que ces valeurs correspondent */
+    height: 55px; /* à la taille souhaitée pour l'image */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); // Ombre noire légèrement diffuse
+    transition: transform 0.3s ease, box-shadow 0.3s ease; // Animation douce pour l'ombre
+
+    &:hover {
+      transform: scale(1.1);
+      // Intensifiez l'ombre au survol
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.75); // Ombre plus foncée et plus étendue
+    }
+  }
+
+  @media (max-width: 1200px) {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+}
+
+
+
+
+

@@ -1,0 +1,15 @@
+<mat-tab-group [(selectedIndex)]="selectedTabIndex">
+  <mat-tab label="Listes des salles">
+    <app-view-halls (deleteHallEvent)="onDeleteHall($event)" (updateHallEvent)="onUpdateHallEvent($event)" [paginatedResourceHalls]="paginatedResourceSignal()" (handlePageEvent)="handlePageEvent($event)"></app-view-halls>
+  </mat-tab>
+  @if(paginatedResourceSignal().hasTemplate("createHall")) {
+    <mat-tab label="Ajouter une salle">
+      <app-form-hall (submitSaveHall)="onSubmitSaveHall($event)"></app-form-hall>
+    </mat-tab>
+  }
+  @if(hallUpdatingSignal()!==undefined) {
+    <mat-tab label="Modifier une salle">
+      <app-form-hall (submitUpdateHall)="onSubmitUpdateHall($event)" [hall]="hallUpdatingSignal()"></app-form-hall>
+    </mat-tab>
+  }
+</mat-tab-group>

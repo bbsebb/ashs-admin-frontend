@@ -1,0 +1,15 @@
+<mat-tab-group [(selectedIndex)]="selectedTabIndex" [preserveContent]="false">
+  <mat-tab label="Listes des entraineurs">
+    <app-view-coachs (deleteCoachEvent)="onDeleteCoach($event)" (updateCoachEvent)="onUpdateCoachEvent($event)" [paginatedResourceCoaches]="paginatedResourceSignal()" (handlePageEvent)="handlePageEvent($event)"></app-view-coachs>
+  </mat-tab>
+  @if(paginatedResourceSignal().hasTemplate("createCoach")) {
+    <mat-tab label="Ajouter un entraineur">
+      <app-form-coach (submitSaveCoach)="onSubmitSaveCoach($event)"></app-form-coach>
+    </mat-tab>
+  }
+  @if(coachUpdatingSignal()!==undefined) {
+    <mat-tab label="Modifier un entraineur">
+      <app-form-coach (submitUpdateCoach)="onSubmitUpdateCoach($event)" [coach]="coachUpdatingSignal()"></app-form-coach>
+    </mat-tab>
+  }
+</mat-tab-group>

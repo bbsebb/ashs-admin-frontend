@@ -1,0 +1,42 @@
+<mat-card>
+  <mat-card-title>Formulaire d'équipe</mat-card-title>
+  <form [formGroup]="teamForm" (ngSubmit)="onSubmit()">
+
+    <!-- Champ pour la catégorie -->
+    <mat-form-field appearance="fill">
+      <mat-label>Catégorie</mat-label>
+      <input matInput formControlName="category" required>
+      @if (hasError('category')) {
+        <mat-error>{{ displayError('category') }}</mat-error>
+      }
+    </mat-form-field>
+
+    <!-- Champ pour le numéro de l'équipe -->
+    <mat-form-field appearance="fill">
+      <mat-label>Numéro d'équipe</mat-label>
+      <input matInput type="number" formControlName="teamNumber" required>
+      @if (hasError('teamNumber')) {
+        <mat-error>{{ displayError('teamNumber') }}</mat-error>
+      }
+    </mat-form-field>
+
+    <!-- Champ pour le genre avec un select -->
+    <mat-form-field appearance="fill">
+      <mat-label>Genre</mat-label>
+      <mat-select formControlName="gender" required>
+        @for(gender of Object.values(Gender);track gender) {
+          <mat-option [value]="gender">{{ gender }}</mat-option>
+        }
+      </mat-select>
+      @if (hasError('gender')) {
+        <mat-error>{{ displayError('gender') }}</mat-error>
+      }
+    </mat-form-field>
+
+    <!-- Champ pour les sessions d'entraînement -->
+
+
+    <!-- Boutons de soumission -->
+    <button mat-raised-button color="primary" type="submit" [disabled]="teamForm.invalid">Soumettre</button>
+  </form>
+</mat-card>

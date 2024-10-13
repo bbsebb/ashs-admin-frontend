@@ -1,4 +1,39 @@
+@use 'styles/theme' as variables;
+@use '@angular/material' as mat;
 /* You can add global styles to this file, and also import other style files */
 
+
+
 html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  background-color: mat.get-theme-color(variables.$my-theme, background,background);
+}
+main {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+
+
+  section {
+    margin-bottom: 20px;
+  }
+
+  h2 {
+    color: mat.get-theme-color(variables.$my-theme, primary, A100-contrast);
+  }
+}
+
+a {
+  color:inherit;
+  text-decoration: inherit;
+  font-family: inherit;
+}
+
+a:hover {
+  color:inherit;
+  text-decoration: inherit;
+}
+
+

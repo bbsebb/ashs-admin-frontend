@@ -1,0 +1,45 @@
+<mat-card>
+  <mat-card-title>Enregistrement entraineur</mat-card-title>
+  <form [formGroup]="coachForm" (ngSubmit)="onSubmit()">
+    <!-- Email -->
+    <mat-form-field class="full-width" appearance="outline">
+      <mat-label>Email</mat-label>
+      <input matInput placeholder="Votre adresse email" type="text" formControlName="email"  />
+      @if(hasError('email')) {
+        <mat-error>{{ displayError('email') }}</mat-error>
+      }
+    </mat-form-field>
+
+    <!-- Name -->
+    <mat-form-field class="full-width" appearance="outline">
+      <mat-label>Nom</mat-label>
+      <input matInput placeholder="Votre nom" type="text" formControlName="name"  />
+      @if(hasError('name')) {
+        <mat-error>{{ displayError('name') }}</mat-error>
+      }
+    </mat-form-field>
+
+    <!-- Surname -->
+    <mat-form-field class="full-width" appearance="outline">
+      <mat-label>Prénom</mat-label>
+      <input matInput placeholder="Votre prénom" type="text" formControlName="surname"  />
+      @if(hasError('surname')) {
+        <mat-error>{{ displayError('surname') }}</mat-error>
+      }
+    </mat-form-field>
+
+    <!-- Phone -->
+    <mat-form-field class="full-width" appearance="outline">
+      <mat-label>Téléphone</mat-label>
+      <input matInput placeholder="Votre numéro de téléphone" type="text" formControlName="phone"  />
+      @if(hasError('phone')) {
+        <mat-error>{{ displayError('phone') }}</mat-error>
+      }
+    </mat-form-field>
+
+    <!-- Submit Button -->
+    <div class="form-actions">
+      <button mat-raised-button color="primary" type="submit" [disabled]="coachForm.invalid">Soumettre</button>
+    </div>
+  </form>
+</mat-card>
