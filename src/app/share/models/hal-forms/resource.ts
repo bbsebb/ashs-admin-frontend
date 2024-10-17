@@ -32,6 +32,9 @@ export class Resource implements HalForms {
   }
 
   getTemplate(key: string): Template {
+    if(!this._templates) {
+      throw new Error(`Templates not found.`);
+    }
     const template = this._templates[key];
     if (!template) {
       throw new Error(`Template with key "${key}" not found.`);

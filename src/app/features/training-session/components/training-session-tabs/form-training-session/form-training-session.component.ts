@@ -14,6 +14,7 @@ import {toSignal} from "@angular/core/rxjs-interop";
 import {PaginatedResource} from "../../../../../share/models/hal-forms/paginated-resource";
 import {TimeSlot} from "../../../../../share/models/time-slot";
 import {GoogleMapsModule} from "@angular/google-maps";
+import {DayOfWeekPipe} from "../../../../../share/pipe/day-of-week.pipe";
 
 
 @Component({
@@ -30,7 +31,8 @@ import {GoogleMapsModule} from "@angular/google-maps";
     MatButton,
     MatError,
     MatInput,
-    GoogleMapsModule
+    GoogleMapsModule,
+    DayOfWeekPipe
   ],
   templateUrl: './form-training-session.component.html',
   styleUrl: './form-training-session.component.scss'
@@ -38,25 +40,26 @@ import {GoogleMapsModule} from "@angular/google-maps";
 export class FormTrainingSessionComponent implements OnInit {
   private fb: FormBuilder = inject(FormBuilder);
   private hallService: HallService = inject(HallService);
-  _trainingSession: InputSignal<TrainingSession | undefined> = input<TrainingSession | undefined>(undefined,{alias: 'trainingSession'});
+  inputSignal: InputSignal<TrainingSession | undefined> = input<TrainingSession | undefined>(undefined,{alias: 'trainingSession'});
   submitSaveTrainingSession = output<TrainingSession>();
   submitUpdateTrainingSession = output<TrainingSession>()
   trainingSessionForm!: FormGroup ;
 
-  _hallList = toSignal<PaginatedResource<Hall>>(this.hallService.getHalls());
+  hallList = toSignal<PaginatedResource<Hall>>(this.hallService.getHalls());
 
 
 
   ngOnInit(): void {
     // Initialisation du formulaire
     // Initialisation du formulaire
+
     this.trainingSessionForm = this.fb.group({
       dayOfWeek: ['', Validators.required],
       startTime: ['', Validators.required],
       endTime: ['', Validators.required],
       hall: [null, Validators.required],
     });
-    const temp = this._trainingSession();
+    const temp = this.inputSignal();
     // Si une séance d'entraînement existe, peupler le formulaire
     if (temp) {
       this.trainingSessionForm.patchValue({
@@ -72,7 +75,7 @@ export class FormTrainingSessionComponent implements OnInit {
 
   onSubmit(): void {
     const trainingSessionValue = this.extractTrainingSession();
-    const trainingSession = this._trainingSession();
+    const trainingSession = this.inputSignal();
     if(trainingSession) {
       this.submitUpdateTrainingSession.emit(TrainingSession.update(trainingSession,trainingSessionValue));
     } else {

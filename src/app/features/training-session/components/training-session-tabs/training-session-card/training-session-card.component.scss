@@ -1,0 +1,60 @@
+mat-card {
+  width: 250px;
+  border-radius: 12px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  margin: 16px;
+  transition: transform 0.3s ease;
+
+  mat-card-header {
+    display: flex;
+    align-items: center;
+    position: relative;  // Ajoute cette ligne pour rendre le parent positionné
+
+    mat-card-title {
+      font-size: 1.2rem;
+      font-weight: bold;
+      width: 100%; // Prendre tout l'espace disponible
+    }
+
+    .session-time {
+      position: absolute;
+      top: 5px;
+      right: 5px;
+      font-size: 1rem;
+      font-weight: bold;
+    }
+  }
+
+  mat-card-content {
+    display: flex;
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 16px;
+
+    .session-timing {
+      display: flex;
+      align-items: center;
+      font-size: 1rem;
+      color: #333;
+
+      mat-icon.time-icon {
+        color: #3f51b5;
+        margin-right: 8px;
+      }
+
+      span {
+        font-weight: bold;
+        color: #1a237e;
+      }
+    }
+  }
+
+  mat-card-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+    padding: 8px;
+  }
+}

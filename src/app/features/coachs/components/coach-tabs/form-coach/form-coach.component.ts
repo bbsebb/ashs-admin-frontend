@@ -4,9 +4,7 @@ import {MatError, MatFormField, MatLabel} from "@angular/material/form-field";
 import {MatInput} from "@angular/material/input";
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 import {MatButton} from "@angular/material/button";
-import {CoachService} from "../../../../../share/services/coach.service";
 import {Coach} from "../../../../../share/models/coach";
-import {HalForms} from "../../../../../share/models/hal-forms/hal-forms";
 
 @Component({
   selector: 'app-form-coach',

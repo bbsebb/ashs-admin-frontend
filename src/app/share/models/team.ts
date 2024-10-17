@@ -5,6 +5,7 @@ import {TrainingSession} from "./training-session";
 import {IHall} from "./hall";
 
 export class Team extends Resource implements ITeam {
+  id?: number;
   category: string;
   gender: Gender;
   teamNumber: number;
@@ -12,6 +13,7 @@ export class Team extends Resource implements ITeam {
 
   constructor(halForms:HalForms,team: ITeam) {
     super(halForms);
+    this.id = team.id;
     this.category = team.category;
     this.gender = team.gender;
     this.teamNumber = team.teamNumber;
@@ -27,6 +29,7 @@ export class Team extends Resource implements ITeam {
     };
 
     return new Team(halForms, {
+      id: team.id,
       category: team.category,
       gender: team.gender,
       teamNumber: team.teamNumber,
@@ -43,6 +46,7 @@ export class Team extends Resource implements ITeam {
   }
 }
 export interface ITeam {
+  id?: number;
   gender: Gender;
   category: string;
   teamNumber: number;

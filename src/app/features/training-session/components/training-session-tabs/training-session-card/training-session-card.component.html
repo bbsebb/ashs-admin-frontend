@@ -1,15 +1,31 @@
-<mat-card class="coach-card">
+<mat-card>
   <mat-card-header>
-    <div mat-card-avatar class="example-header-image"></div>
-    <mat-card-title>{{_trainingSession().getSelfLink().href}} </mat-card-title>
-
+    <mat-card-title>
+      {{ trainingSessionInputSignal().timeSlot.dayOfWeek | dayOfWeekToFrench }}
+      <span class="session-time">
+        {{ trainingSessionInputSignal().timeSlot.startTime | duration:trainingSessionInputSignal().timeSlot.endTime }}
+      </span>
+    </mat-card-title>
   </mat-card-header>
-  <mat-card-actions [align]="'end'">
-    @if(_trainingSession().getTemplate("updateTrainingSession")) {
-      <button mat-button (click)="onModify()">Modifier</button>
+
+  <mat-card-content>
+    <div class="session-timing">
+      <mat-icon class="time-icon">access_time</mat-icon>
+      De {{ trainingSessionInputSignal().timeSlot.startTime | timeFormat }} à {{ trainingSessionInputSignal().timeSlot.endTime | timeFormat }}
+    </div>
+
+      <button mat-button color="warn" (click)="openHallDialog()"><mat-icon  class="hall-icon">location_on</mat-icon>{{ trainingSessionInputSignal().hall.name }}</button>
+
+  </mat-card-content>
+
+  <mat-card-actions align="end">
+    @if(trainingSessionInputSignal().getTemplate("updateTrainingSession")) {
+      <button mat-button color="primary" (click)="onModify()">Modifier</button>
     }
-    @if(_trainingSession().getTemplate("deleteTrainingSession")) {
-      <button mat-button (click)="onDelete()">Supprimer</button>
+    @if(trainingSessionInputSignal().getTemplate("deleteTrainingSession")) {
+      <button mat-button color="warn" (click)="onDelete()">Supprimer</button>
     }
   </mat-card-actions>
 </mat-card>
+
+

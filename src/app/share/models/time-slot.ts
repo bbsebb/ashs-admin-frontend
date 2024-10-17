@@ -1,14 +1,9 @@
-import {Time} from "./time";
 import {DayOfWeek} from "./day-of-week";
+import {Time} from "./time";
 
-export class TimeSlot {
+export interface TimeSlot {
   dayOfWeek: DayOfWeek;
-  startTime: Time;
-  endTime: Time;
+  startTime: string;
+  endTime: string;
 
-  constructor(dayOfWeek: DayOfWeek, startTime: Time, endTime: Time) {
-    this.dayOfWeek = dayOfWeek;
-    this.startTime = startTime;
-    this.endTime = endTime;
-  }
 }

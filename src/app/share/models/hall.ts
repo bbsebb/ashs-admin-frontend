@@ -3,11 +3,13 @@ import {HalForms} from "./hal-forms/hal-forms";
 import {Address} from "./address";
 
 export class Hall extends Resource implements IHall{
+  id?: number;
   name: string;
   address: Address;
 
   constructor(halForms: HalForms, hall: IHall) {
-    super(halForms);  // Appel du constructeur de Resource pour initialiser _links et _templates
+    super(halForms);// Appel du constructeur de Resource pour initialiser _links et _templates
+    this.id = hall.id;
     this.name = hall.name;
     this.address = hall.address;
   }
@@ -20,6 +22,7 @@ export class Hall extends Resource implements IHall{
     };
 
     return new Hall(halForms, {
+      id: hall.id,
       name: hall.name,
       address: hall.address
     });
@@ -33,6 +36,7 @@ export class Hall extends Resource implements IHall{
 }
 
 export interface IHall {
+  id?: number;
   name: string;
   address: Address;
 }

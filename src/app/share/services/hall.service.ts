@@ -1,5 +1,5 @@
 import {inject, Injectable} from '@angular/core';
-import {HttpClient, HttpParams} from "@angular/common/http";
+import { HttpClient, HttpParams } from "@angular/common/http";
 import {environment} from "../../../environments/environment";
 import {Observable} from "rxjs";
 import {PaginatedResource} from "../models/hal-forms/paginated-resource";
@@ -32,7 +32,6 @@ export class HallService {
   save(hall: Hall,url: string = this.apiUrl): Observable<Hall> {
     return this.http.post<Hall>(url, hall);
   }
-
 
 
   update(hall: Hall): Observable<Hall> {

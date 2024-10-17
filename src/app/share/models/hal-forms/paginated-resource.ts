@@ -43,6 +43,10 @@ export class PaginatedResource<T extends Resource> extends Resource implements P
     return embedded;
   }
 
+  setEmbedded(key: string, value: T[]): void {
+    this._embedded[key] = value;
+  }
+
   hasNext(): boolean {
     return this.hasLink("next");
   }

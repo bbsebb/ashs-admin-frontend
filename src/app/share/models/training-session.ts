@@ -1,14 +1,15 @@
 import {Resource} from "./hal-forms/resource";
 import {TimeSlot} from "./time-slot";
-import {Hall, IHall} from "./hall";
+import {Hall} from "./hall";
 import {HalForms} from "./hal-forms/hal-forms";
 
 export class TrainingSession extends Resource implements ITrainingSessions {
-
+  id?: number;
   timeSlot: TimeSlot;
   hall: Hall;
   constructor(halForms: HalForms, trainingSession: ITrainingSessions) {
     super(halForms);  // Appel du constructeur de Resource pour initialiser _links et _templates
+    this.id = trainingSession.id;
     this.timeSlot = trainingSession.timeSlot;
     this.hall = trainingSession.hall
   }
@@ -27,6 +28,7 @@ export class TrainingSession extends Resource implements ITrainingSessions {
         startTime: trainingSession.timeSlot.startTime,
         endTime: trainingSession.timeSlot.endTime
       },
+      id: trainingSession.id,
       hall: trainingSession.hall
     });
   }
@@ -39,7 +41,7 @@ export class TrainingSession extends Resource implements ITrainingSessions {
 }
 
 export interface ITrainingSessions {
-
+  id?: number;
   timeSlot: TimeSlot;
   hall: Hall;
 }

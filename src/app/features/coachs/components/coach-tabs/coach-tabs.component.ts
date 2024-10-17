@@ -33,9 +33,6 @@ export class CoachTabsComponent {
 
   constructor() {
     this.getCoaches();
-    effect(() => {
-      this.selectedTabIndex = this.coachUpdatingSignal() ? 2 : 0;
-    });
   }
 
   // Getter pour selectedTabIndex
@@ -46,7 +43,7 @@ export class CoachTabsComponent {
 // Setter pour selectedTabIndex qui capture les changements
   set selectedTabIndex(index: number) {
     if (this.selectedTabIndex !== index) {
-      if(this._selectedTabIndex === 2) {
+      if (this.selectedTabIndex === 2) {
         this.coachUpdatingSignal.set(undefined);
       }
       this._selectedTabIndex = index;
@@ -70,7 +67,10 @@ export class CoachTabsComponent {
     this.coachService.update(coach).subscribe({
       next: (value) => this.getCoaches(), //refresh
       error: (err) => console.error('Erreur : ', err),
-      complete: () => this.coachUpdatingSignal.set(undefined)
+      complete: () => {
+        this.coachUpdatingSignal.set(undefined);
+        this.selectedTabIndex = 0;
+      }
     })
   }
 
@@ -89,6 +89,7 @@ export class CoachTabsComponent {
   }
 
   onUpdateCoachEvent($event: Coach) {
+    this.selectedTabIndex = 2;
     this.coachUpdatingSignal.set($event);
   }
 }

@@ -7,7 +7,7 @@
       <mat-label>Sélectionnez un jour</mat-label>
       <mat-select formControlName="dayOfWeek">
         @for(day of Object.values(DayOfWeek); track day) {
-          <mat-option [value]="day">{{ day }}</mat-option>
+          <mat-option [value]="day">{{ day | dayOfWeekToFrench}}</mat-option>
         }
       </mat-select>
       @if (hasError('dayOfWeek')) {
@@ -37,7 +37,7 @@
     <mat-form-field class="full-width" appearance="outline">
       <mat-label>Sélectionnez la salle</mat-label>
       <mat-select formControlName="hall">
-        @for (hall of _hallList()?.getEmbedded("halls");track hall) {
+        @for (hall of hallList()?.getEmbedded("halls");track hall) {
           <mat-option [value]="hall">{{ hall.name }}</mat-option>
         }
       </mat-select>

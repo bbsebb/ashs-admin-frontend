@@ -1,6 +1,6 @@
 import {inject, Injectable} from '@angular/core';
 import {environment} from "src/environments/environment";
-import {HttpClient, HttpParams} from "@angular/common/http";
+import { HttpClient, HttpParams } from "@angular/common/http";
 import {Observable, tap} from "rxjs";
 import {map} from "rxjs/operators";
 import {PaginatedModel} from "../models/hal-forms/paginated-model";

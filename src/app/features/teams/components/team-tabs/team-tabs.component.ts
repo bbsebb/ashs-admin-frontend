@@ -9,6 +9,7 @@ import {ViewHallsComponent} from "../../../halls/components/hall-tabs/view-halls
 import {ViewTeamsComponent} from "./view-teams/view-teams.component";
 import {FormTeamComponent} from "./form-team/form-team.component";
 
+
 @Component({
   selector: 'app-team-tabs',
   standalone: true,
@@ -24,23 +25,35 @@ import {FormTeamComponent} from "./form-team/form-team.component";
   styleUrl: './team-tabs.component.scss'
 })
 export class TeamTabsComponent {
-  _teamUpdating = signal<Team | undefined>(undefined);
+  teamUpdating = signal<Team | undefined>(undefined);
 
   teamService: TeamService = inject(TeamService);
 
-  selectedTabIndex: number = 0;
-  _paginatedResource: WritableSignal<PaginatedResource<Team>> = signal(new PaginatedResource<Team>({_embedded: {teams: [] as Team[]}, page: {size:0,number:0,totalPages:0,totalElements:0}, _links: { self: { href: '' } }, _templates: {} }));
+  private _selectedTabIndex: number = 0;
+  paginatedResource: WritableSignal<PaginatedResource<Team>> = signal(new PaginatedResource<Team>({_embedded: {teams: [] as Team[]}, page: {size:0,number:0,totalPages:0,totalElements:0}, _links: { self: { href: '' } }, _templates: {} }));
 
   constructor() {
     this.getTeams();
-    effect(() => {
-      this.selectedTabIndex = this._teamUpdating() ? 2 : 0;
-    });
+  }
+
+
+  get selectedTabIndex(): number {
+    return this._selectedTabIndex;
+  }
+
+// Setter pour selectedTabIndex qui capture les changements
+  set selectedTabIndex(index: number) {
+    if (this.selectedTabIndex !== index) {
+      if (this.selectedTabIndex === 2) {
+        this.teamUpdating.set(undefined);
+      }
+      this._selectedTabIndex = index;
+    }
   }
 
   getTeams() {
     this.teamService.getTeams().subscribe(teams => {
-      this._paginatedResource.set(teams);
+      this.paginatedResource.set(teams);
     })
   }
 
@@ -55,12 +68,12 @@ export class TeamTabsComponent {
     this.teamService.update(team).subscribe({
       next: () => this.getTeams(), //refresh
       error: (err) => console.error('Erreur : ', err),
-      complete: () => this._teamUpdating.set(undefined)
+      complete: () => this.teamUpdating.set(undefined)
     })
   }
 
   onSubmitSaveTeam(team: Team) {
-    this.teamService.save(team,this._paginatedResource().getTemplate("createTeam").target).subscribe({
+    this.teamService.save(team,this.paginatedResource().getTemplate("createTeam").target).subscribe({
       next: () => this.getTeams(), //refresh
       error: (err) => console.error('Erreur : ', err),
       complete: () => this.selectedTabIndex = 0
@@ -69,12 +82,13 @@ export class TeamTabsComponent {
 
   handlePageEvent($event: PageEvent) {
     this.teamService.getTeams($event.pageIndex, $event.pageSize).subscribe(teams => {
-      this._paginatedResource.set(teams);
+      this.paginatedResource.set(teams);
     } );
   }
 
   onUpdateTeamEvent(team: Team) {
-    this._teamUpdating.set(team);
+    this.selectedTabIndex = 2;
+    this.teamUpdating.set(team);
   }
 
 }

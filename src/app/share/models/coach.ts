@@ -2,13 +2,15 @@ import {HalForms} from "./hal-forms/hal-forms";
 import {Resource} from "./hal-forms/resource";
 
 export class Coach extends Resource {
+  id?:number;
   name: string;
   surname: string;
   email: string;
   phone: string;
 
   constructor(halForms: HalForms, coach: ICoach) {
-    super(halForms);  // Appel du constructeur de Resource pour initialiser _links et _templates
+    super(halForms);// Appel du constructeur de Resource pour initialiser _links et _templates
+    this.id = coach.id;
     this.name = coach.name;
     this.surname = coach.surname;
     this.email = coach.email;
@@ -23,6 +25,7 @@ export class Coach extends Resource {
     };
 
     return new Coach(halForms, {
+      id: coach.id,
       name: coach.name,
       surname: coach.surname,
       email: coach.email,
@@ -40,6 +43,7 @@ export class Coach extends Resource {
 }
 
 export interface ICoach {
+  id?:number;
   name: string;
   surname: string;
   email: string;

@@ -21,18 +21,30 @@ import {ViewHallsComponent} from "./view-halls/view-halls.component";
 })
 export class HallTabsComponent {
 
+
   hallUpdatingSignal = signal<Hall | undefined>(undefined);
 
   hallService: HallService = inject(HallService);
 
-  selectedTabIndex: number = 0;
+  private _selectedTabIndex: number = 0;
   paginatedResourceSignal: WritableSignal<PaginatedResource<Hall>> = signal(new PaginatedResource<Hall>({_embedded: {halls: [] as Hall[]}, page: {size:0,number:0,totalPages:0,totalElements:0}, _links: { self: { href: '' } }, _templates: {} }));
 
   constructor() {
     this.getHalls();
-    effect(() => {
-      this.selectedTabIndex = this.hallUpdatingSignal() ? 2 : 0;
-    });
+  }
+
+// Setter pour selectedTabIndex qui capture les changements
+  set selectedTabIndex(index: number) {
+    if (this.selectedTabIndex !== index) {
+      if (this.selectedTabIndex === 2) {
+        this.hallUpdatingSignal.set(undefined);
+      }
+      this._selectedTabIndex = index;
+    }
+  }
+
+  get selectedTabIndex(): number {
+    return this._selectedTabIndex;
   }
 
   getHalls() {
@@ -52,7 +64,10 @@ export class HallTabsComponent {
     this.hallService.update(hall).subscribe({
       next: () => this.getHalls(), //refresh
       error: (err) => console.error('Erreur : ', err),
-      complete: () => this.hallUpdatingSignal.set(undefined)
+      complete: () => {
+        this.selectedTabIndex = 0
+        this.hallUpdatingSignal.set(undefined);
+      }
     })
   }
 
@@ -71,6 +86,7 @@ export class HallTabsComponent {
   }
 
   onUpdateHallEvent(hall: Hall) {
+    this.selectedTabIndex = 2;
     this.hallUpdatingSignal.set(hall);
   }
 
