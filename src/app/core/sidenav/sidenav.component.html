@@ -1,9 +1,6 @@
 <mat-sidenav-container>
   <mat-sidenav #sidenav [opened]="opened" (openedChange)="openingService.isOpen.set($event)"  mode="over">
     <mat-nav-list>
-      <a mat-list-item  (click)="sidenav.close()">Home</a>
-
-      <a mat-list-item  (click)="sidenav.close()">Contact</a>
       <a mat-list-item  (click)="sidenav.close()" [routerLink]="['/coaches']">Entraineurs</a>
       <a mat-list-item  (click)="sidenav.close()" [routerLink]="['/halls']">Salles</a>
       <a mat-list-item  (click)="sidenav.close()" [routerLink]="['/teams']">Équipes</a>

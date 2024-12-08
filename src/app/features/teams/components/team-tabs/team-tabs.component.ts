@@ -1,11 +1,9 @@
-import {Component, effect, inject, signal, WritableSignal} from '@angular/core';
+import {Component, inject, signal, viewChild, WritableSignal} from '@angular/core';
 import {Team} from "../../../../share/models/team";
 import {TeamService} from "../../../../share/services/team.service";
 import {PaginatedResource} from "../../../../share/models/hal-forms/paginated-resource";
 import {PageEvent} from "@angular/material/paginator";
-import {FormHallComponent} from "../../../halls/components/hall-tabs/form-hall/form-hall.component";
 import {MatTab, MatTabGroup} from "@angular/material/tabs";
-import {ViewHallsComponent} from "../../../halls/components/hall-tabs/view-halls/view-halls.component";
 import {ViewTeamsComponent} from "./view-teams/view-teams.component";
 import {FormTeamComponent} from "./form-team/form-team.component";
 
@@ -14,10 +12,8 @@ import {FormTeamComponent} from "./form-team/form-team.component";
   selector: 'app-team-tabs',
   standalone: true,
   imports: [
-    FormHallComponent,
     MatTab,
     MatTabGroup,
-    ViewHallsComponent,
     ViewTeamsComponent,
     FormTeamComponent
   ],
@@ -26,11 +22,12 @@ import {FormTeamComponent} from "./form-team/form-team.component";
 })
 export class TeamTabsComponent {
   teamUpdating = signal<Team | undefined>(undefined);
+  teamFormComponentSignal = viewChild(FormTeamComponent)
 
   teamService: TeamService = inject(TeamService);
 
   private _selectedTabIndex: number = 0;
-  paginatedResource: WritableSignal<PaginatedResource<Team>> = signal(new PaginatedResource<Team>({_embedded: {teams: [] as Team[]}, page: {size:0,number:0,totalPages:0,totalElements:0}, _links: { self: { href: '' } }, _templates: {} }));
+  paginatedResource: WritableSignal<PaginatedResource<Team>> = signal(new PaginatedResource<Team>());
 
   constructor() {
     this.getTeams();
@@ -67,16 +64,23 @@ export class TeamTabsComponent {
   onSubmitUpdateTeam(team: Team) {
     this.teamService.update(team).subscribe({
       next: () => this.getTeams(), //refresh
-      error: (err) => console.error('Erreur : ', err),
-      complete: () => this.teamUpdating.set(undefined)
+      error: (err) => this.getTeams(),
+      complete: () => {
+        this.teamFormComponentSignal()?.reset();
+        this.teamUpdating.set(undefined);
+        this.selectedTabIndex = 0;
+      }
     })
   }
 
   onSubmitSaveTeam(team: Team) {
     this.teamService.save(team,this.paginatedResource().getTemplate("createTeam").target).subscribe({
       next: () => this.getTeams(), //refresh
-      error: (err) => console.error('Erreur : ', err),
-      complete: () => this.selectedTabIndex = 0
+      error: (err) => this.getTeams(),
+      complete: () => {
+        this.teamFormComponentSignal()?.reset();
+        this.selectedTabIndex = 0;
+      }
     });
   }
 

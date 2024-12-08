@@ -1,5 +1,5 @@
-import {Component, inject, input, InputSignal, OnInit, output} from '@angular/core';
-import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
+import {Component, inject, input, InputSignal, OnInit, output, viewChild} from '@angular/core';
+import {FormBuilder, FormGroup, FormGroupDirective, ReactiveFormsModule, Validators} from "@angular/forms";
 import {Hall, IHall} from "../../../../../share/models/hall";
 import {MatCard, MatCardTitle} from "@angular/material/card";
 import {MatError, MatFormField, MatLabel} from "@angular/material/form-field";
@@ -24,9 +24,9 @@ import {Address} from "../../../../../share/models/address";
   styleUrl: './form-hall.component.scss'
 })
 export class FormHallComponent implements OnInit {
-
+  readonly formDirective = viewChild.required<FormGroupDirective>('formDirective');
   private fb: FormBuilder = inject(FormBuilder);
-  _hall: InputSignal<Hall | undefined> = input<Hall | undefined>(undefined,{alias: 'hall'});
+  hall: InputSignal<Hall | undefined> = input<Hall | undefined>(undefined,{alias: 'hall'});
   submitSaveHall = output<Hall>();
   submitUpdateHall = output<Hall>()
   hallForm!: FormGroup ;
@@ -35,35 +35,42 @@ export class FormHallComponent implements OnInit {
 
   ngOnInit(): void {
     // Initialisation du formulaire
-    this.hallForm = this.fb.group({
+    this.hallForm = this.initHallForm();
+
+    const hall = this.hall();
+    if(hall) {
+      this.hallForm.patchValue({
+        name: hall.name,
+        address: {
+          street: hall.address.street,
+          city: hall.address.city,
+          postalCode: hall.address.postalCode,
+          country: hall.address.country
+        },
+      });
+    }
+  }
+
+  initHallForm(): FormGroup {
+    return this.fb.group({
       name: ['', Validators.required],
-      street: ['', Validators.required],
-      city: ['', Validators.required],
-      postalCode: ['', Validators.required],
-      country: ['', Validators.required],
+      address: this.fb.group({
+        street: ['', Validators.required],
+        city: ['', Validators.required],
+        postalCode: ['', Validators.required],
+        country: ['', Validators.required],
+      }),
     });
   }
 
-  onSubmit(): void {
-    const hall = this._hall();
-    const address: Address = {
-      street: this.hallForm.get('street')?.value,
-      city: this.hallForm.get('city')?.value,
-      postalCode: this.hallForm.get('postalCode')?.value,
-      country: this.hallForm.get('country')?.value
-    }
-    const hallForm: IHall = {
-      name: this.hallForm.get('name')?.value,
-      address: address
-    };
-
+  onSubmit(formDirective: FormGroupDirective): void {
+    const hall = this.hall();
     if(hall) {
-      const updatedHall = Hall.update(hall,hallForm);
+      const updatedHall = Hall.update(hall,this.hallForm.value);
       this.submitUpdateHall.emit(updatedHall);
     } else {
-      this.submitSaveHall.emit(Hall.create(hallForm));
+      this.submitSaveHall.emit(new Hall(this.hallForm.value));
     }
-
   }
 
   hasError(field: string): boolean {
@@ -78,6 +85,11 @@ export class FormHallComponent implements OnInit {
     } else {
       return '';
     }
+  }
+
+  public reset():void {
+    this.formDirective().resetForm();
+    this.hallForm.reset();
   }
 
 }

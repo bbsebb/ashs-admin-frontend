@@ -1,4 +1,4 @@
-import {Component, inject, input, InputSignal, OnInit, output} from '@angular/core';
+import {Component, computed, inject, input, InputSignal, OnInit, output} from '@angular/core';
 
 import {MatButton} from "@angular/material/button";
 import {
@@ -11,13 +11,15 @@ import {
 } from "@angular/material/card";
 import {TrainingSession} from "../../../../../share/models/training-session";
 import {MatIcon} from "@angular/material/icon";
-import {DurationPipe} from "../../../../../share/pipe/duration.pipe";
-import {DayOfWeekPipe} from "../../../../../share/pipe/day-of-week.pipe";
-import {TimePipe} from "../../../../../share/pipe/time.pipe";
+import {DurationPipe} from "../../../../../share/pipes/duration.pipe";
+import {DayOfWeekPipe} from "../../../../../share/pipes/day-of-week.pipe";
+import {TimePipe} from "../../../../../share/pipes/time.pipe";
 import {MatDivider} from "@angular/material/divider";
 import {MatDialog} from "@angular/material/dialog";
 import {HallCardComponent} from "../../../../halls/components/hall-tabs/hall-card/hall-card.component";
 import {HallCardDialogComponent} from "../../../../halls/components/hall-card-dialog/hall-card-dialog.component";
+import {Resource} from "../../../../../share/models/hal-forms/resource";
+import {ConfirmDialogComponent} from "../../../../../share/components/dialog/confirm-dialog.component";
 
 
 @Component({
@@ -48,14 +50,22 @@ export class TrainingSessionCardComponent {
   modifyTrainingSession= output<TrainingSession>({alias: 'modifyTrainingSession'});
 
 
-
-
   onModify() {
     this.modifyTrainingSession.emit(this.trainingSessionInputSignal());
   }
 
   onDelete() {
-    this.deleteTrainingSession.emit(this.trainingSessionInputSignal());
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      data: 'Voulez-vous vraiment supprimer ce créneau ?',
+      width: '400px',
+    });
+
+    dialogRef.afterClosed().subscribe((result: boolean) => {
+      if (result) {
+        this.deleteTrainingSession.emit(this.trainingSessionInputSignal());
+      }
+    });
+
   }
 
   openHallDialog() {
@@ -65,4 +75,5 @@ export class TrainingSessionCardComponent {
     });
   }
 
+  protected readonly Resource = Resource;
 }

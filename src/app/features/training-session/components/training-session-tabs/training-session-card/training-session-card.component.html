@@ -18,14 +18,16 @@
 
   </mat-card-content>
 
+  @if(trainingSessionInputSignal().hasTemplate("updateTrainingSession") || trainingSessionInputSignal().hasTemplate("deleteTrainingSession")) {
   <mat-card-actions align="end">
-    @if(trainingSessionInputSignal().getTemplate("updateTrainingSession")) {
+    @if(trainingSessionInputSignal().hasTemplate("updateTrainingSession")) {
       <button mat-button color="primary" (click)="onModify()">Modifier</button>
     }
-    @if(trainingSessionInputSignal().getTemplate("deleteTrainingSession")) {
+    @if(trainingSessionInputSignal().hasTemplate("deleteTrainingSession")) {
       <button mat-button color="warn" (click)="onDelete()">Supprimer</button>
     }
   </mat-card-actions>
+  }
 </mat-card>
 
 

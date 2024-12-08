@@ -1,6 +1,6 @@
 <mat-card>
   <mat-card-title>Enregistrement Salle</mat-card-title>
-  <form [formGroup]="hallForm" (ngSubmit)="onSubmit()">
+  <form [formGroup]="hallForm" #formDirective="ngForm" (ngSubmit)="onSubmit(formDirective)">
 
     <!-- Hall Name -->
     <mat-form-field class="full-width" appearance="outline">
@@ -10,42 +10,43 @@
         <mat-error>{{ displayError('name') }}</mat-error>
       }
     </mat-form-field>
+    <div formGroupName="address">
+      <!-- Address - Street -->
+      <mat-form-field class="full-width" appearance="outline">
+        <mat-label>Rue</mat-label>
+        <input matInput placeholder="Rue" type="text" formControlName="street"/>
+        @if (hasError('address.street')) {
+          <mat-error>{{ displayError('address.street') }}</mat-error>
+        }
+      </mat-form-field>
 
-    <!-- Address - Street -->
-    <mat-form-field class="full-width" appearance="outline">
-      <mat-label>Rue</mat-label>
-      <input matInput placeholder="Rue" type="text" formControlName="street" />
-      @if(hasError('street')) {
-        <mat-error>{{ displayError('street') }}</mat-error>
-      }
-    </mat-form-field>
+      <!-- Address - City -->
+      <mat-form-field class="full-width" appearance="outline">
+        <mat-label>Ville</mat-label>
+        <input matInput placeholder="Ville" type="text" formControlName="city"/>
+        @if (hasError('address.city')) {
+          <mat-error>{{ displayError('address.city') }}</mat-error>
+        }
+      </mat-form-field>
 
-    <!-- Address - City -->
-    <mat-form-field class="full-width" appearance="outline">
-      <mat-label>Ville</mat-label>
-      <input matInput placeholder="Ville" type="text" formControlName="city" />
-      @if(hasError('city')) {
-        <mat-error>{{ displayError('city') }}</mat-error>
-      }
-    </mat-form-field>
+      <!-- Address - Postal Code -->
+      <mat-form-field class="full-width" appearance="outline">
+        <mat-label>Code Postal</mat-label>
+        <input matInput placeholder="Code Postal" type="text" formControlName="postalCode"/>
+        @if (hasError('address.postalCode')) {
+          <mat-error>{{ displayError('address.postalCode') }}</mat-error>
+        }
+      </mat-form-field>
 
-    <!-- Address - Postal Code -->
-    <mat-form-field class="full-width" appearance="outline">
-      <mat-label>Code Postal</mat-label>
-      <input matInput placeholder="Code Postal" type="text" formControlName="postalCode" />
-      @if(hasError('postalCode')) {
-        <mat-error>{{ displayError('postalCode') }}</mat-error>
-      }
-    </mat-form-field>
-
-    <!-- Address - Country -->
-    <mat-form-field class="full-width" appearance="outline">
-      <mat-label>Pays</mat-label>
-      <input matInput placeholder="Pays" type="text" formControlName="country" />
-      @if(hasError('country')) {
-        <mat-error>{{ displayError('country') }}</mat-error>
-      }
-    </mat-form-field>
+      <!-- Address - Country -->
+      <mat-form-field class="full-width" appearance="outline">
+        <mat-label>Pays</mat-label>
+        <input matInput placeholder="Pays" type="text" formControlName="country"/>
+        @if (hasError('address.country')) {
+          <mat-error>{{ displayError('address.country') }}</mat-error>
+        }
+      </mat-form-field>
+    </div>
 
     <!-- Submit Button -->
     <div class="form-actions">

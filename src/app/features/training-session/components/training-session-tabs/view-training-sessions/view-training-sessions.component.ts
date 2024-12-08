@@ -23,7 +23,7 @@ export class ViewTrainingSessionsComponent {
   updateTrainingSessionEvent = output<TrainingSession>();
   handlePageEvent = output<PageEvent>();
 
-  _paginatedResourceTrainingSessions= input.required<PaginatedResource<TrainingSession>>({alias: 'paginatedResourceTrainingSessions'});
+  paginatedResourceTrainingSessionsSignal= input.required<PaginatedResource<TrainingSession>>({alias: 'paginatedResourceTrainingSessions'});
 
   constructor() {
 

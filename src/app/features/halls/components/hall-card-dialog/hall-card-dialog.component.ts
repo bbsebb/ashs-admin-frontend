@@ -15,7 +15,7 @@ import {Hall} from "../../../../share/models/hall";
 export class HallCardDialogComponent {
 
   constructor(@Inject(MAT_DIALOG_DATA) public hall: Hall) {
-    this.hall = Hall.create(hall);
+    this.hall = new Hall(hall);
   }
 
 

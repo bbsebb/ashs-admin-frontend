@@ -17,6 +17,7 @@
       </div>
     </map-info-window>
   </google-map>
+  @if(hallSignal().hasTemplate("updateHall") || hallSignal().hasTemplate("deleteHall")) {
   <mat-card-actions [align]="'end'">
     @if(hallSignal().hasTemplate("updateHall")) {
       <button mat-button (click)="onModify()">Modifier</button>
@@ -25,5 +26,6 @@
       <button mat-button (click)="onDelete()">Supprimer</button>
     }
   </mat-card-actions>
+  }
 </mat-card>
 

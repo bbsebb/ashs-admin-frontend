@@ -24,7 +24,7 @@ export class ViewHallsComponent {
   updateHallEvent = output<Hall>();
   handlePageEvent = output<PageEvent>();
 
-  _paginatedResourceHalls= input.required<PaginatedResource<Hall>>({alias: 'paginatedResourceHalls'});
+  paginatedResourceHallsSignal= input.required<PaginatedResource<Hall>>({alias: 'paginatedResourceHalls'});
 
   constructor() {
 

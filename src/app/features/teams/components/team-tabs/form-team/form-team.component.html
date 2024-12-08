@@ -1,15 +1,6 @@
 <mat-card>
   <mat-card-title>Formulaire d'équipe</mat-card-title>
-  <form [formGroup]="teamForm" (ngSubmit)="onSubmit()">
-
-    <!-- Champ pour la catégorie -->
-    <mat-form-field appearance="fill">
-      <mat-label>Catégorie</mat-label>
-      <input matInput formControlName="category" required>
-      @if (hasError('category')) {
-        <mat-error>{{ displayError('category') }}</mat-error>
-      }
-    </mat-form-field>
+  <form [formGroup]="teamForm" #formDirective="ngForm" (ngSubmit)="onSubmit(formDirective)">
 
     <!-- Champ pour le numéro de l'équipe -->
     <mat-form-field appearance="fill">
@@ -19,6 +10,21 @@
         <mat-error>{{ displayError('teamNumber') }}</mat-error>
       }
     </mat-form-field>
+
+
+    <!-- Champ pour la catégorie -->
+    <mat-form-field appearance="fill">
+      <mat-label>Catégorie</mat-label>
+      <mat-select formControlName="category" required>
+        @for(category of Object.values(Category);track category) {
+          <mat-option [value]="category">{{ category }}</mat-option>
+        }
+      </mat-select>
+      @if (hasError('category')) {
+        <mat-error>{{ displayError('category') }}</mat-error>
+      }
+    </mat-form-field>
+
 
     <!-- Champ pour le genre avec un select -->
     <mat-form-field appearance="fill">
@@ -34,9 +40,87 @@
     </mat-form-field>
 
     <!-- Champ pour les sessions d'entraînement -->
+    <div formArrayName="trainingSessions">
+      @for(session of sessions.controls;track session.value.id) {
+        <div [formGroupName]="$index">
+          <div class="training-sessions-title">
+            <h3>Session d'entraînement {{ $index + 1 }}</h3>
+            <button mat-icon-button type="button" color="warn" (click)="removeTrainingSession($index)">
+              <mat-icon>close</mat-icon>
+            </button>
+          </div>
+          <div formGroupName="timeSlot">
+            <!-- Day of Week -->
+            <mat-form-field class="full-width" appearance="outline">
+              <mat-label>Sélectionnez un jour</mat-label>
+              <mat-select formControlName="dayOfWeek">
+                @for (day of Object.values(DayOfWeek); track day) {
+                  <mat-option [value]="day">{{ day | dayOfWeekToFrench }}</mat-option>
+                }
+              </mat-select>
+              @if (hasError('trainingSessions.' + $index + '.timeSlot.dayOfWeek')) {
+                <mat-error>{{ displayError('trainingSessions.' + $index + '.timeSlot.dayOfWeek') }}</mat-error>
+              }
+            </mat-form-field>
 
+            <!-- Start Time -->
+            <mat-form-field class="full-width" appearance="outline">
+              <mat-label>Heure de début</mat-label>
+              <input matInput placeholder="Heure de début" type="time" formControlName="startTime"/>
+              @if (hasError('trainingSessions.' + $index + '.timeSlot.startTime')) {
+                <mat-error>{{ displayError('trainingSessions.' + $index + '.timeSlot.startTime') }}</mat-error>
+              }
+            </mat-form-field>
 
-    <!-- Boutons de soumission -->
-    <button mat-raised-button color="primary" type="submit" [disabled]="teamForm.invalid">Soumettre</button>
+            <!-- End Time -->
+            <mat-form-field class="full-width" appearance="outline">
+              <mat-label>Heure de fin</mat-label>
+              <input matInput placeholder="Heure de fin" type="time" formControlName="endTime"/>
+              @if (hasError('trainingSessions.' + $index + '.timeSlot.endTime')) {
+                <mat-error>{{ displayError('trainingSessions.' + $index + '.timeSlot.endTime') }}</mat-error>
+              }
+            </mat-form-field>
+          </div>
+          <!-- Hall (Select existing Hall) -->
+          <mat-form-field class="full-width" appearance="outline">
+            <mat-label>Sélectionner la salle</mat-label>
+            <mat-select formControlName="hall" [compareWith]="compareHalls">
+              @for (hall of hallList()?.getEmbedded("halls"); track hall.id) {
+                <mat-option [value]="hall">{{ hall.name }}</mat-option>
+              }
+            </mat-select>
+            @if (hasError('trainingSessions.'+$index+'.hall')) {
+              <mat-error>{{ displayError('trainingSessions.'+$index+'.hall') }}</mat-error>
+            }
+          </mat-form-field>
+          <!-- Affiche l'erreur si l'heure de début est après l'heure de fin -->
+          @if (hasError('trainingSessions.'+$index+'.timeSlot') && session.get('timeSlot')?.hasError('invalidTimeSlot')) {
+            <mat-error>{{displayError('trainingSessions.'+$index+'.timeSlot')}}</mat-error>
+          }
+        </div>
+      }
+      <div class="add-session-button">
+        <button mat-raised-button type="button" color="primary" (click)="addTrainingSession()">Ajouter une session
+          d'entraînement
+        </button>
+      </div>
+    </div>
+
+    <!-- Champ pour les entraineurs -->
+    <h3>Entraineurs</h3>
+    <mat-form-field class="full-width" appearance="outline">
+      <mat-label>Sélection des entraineurs</mat-label>
+      <mat-select formControlName="coaches" multiple [compareWith]="compareCoaches">
+        @for (coaches of coaches()?.getEmbedded("coaches");track coaches) {
+          <mat-option [value]="coaches">{{ coaches.name }} {{ coaches.surname}}</mat-option>
+        }
+      </mat-select>
+      @if (hasError('hall')) {
+        <mat-error>{{ displayError('hall') }}</mat-error>
+      }
+    </mat-form-field>
   </form>
+  <mat-card-actions [align]="'end'">
+    <button mat-raised-button color="primary" type="submit" (click)="onSubmit(formDirective)" [disabled]="teamForm.invalid">Soumettre</button>
+  </mat-card-actions>
 </mat-card>

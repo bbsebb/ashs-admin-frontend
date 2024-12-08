@@ -21,7 +21,7 @@ export class ViewTeamsComponent {
   updateTeamEvent = output<Team>();
   handlePageEvent = output<PageEvent>();
 
-  _paginatedResourceTeams= input.required<PaginatedResource<Team>>({alias: 'paginatedResourceTeams'});
+  paginatedResourceTeamsSignal= input.required<PaginatedResource<Team>>({alias: 'paginatedResourceTeams'});
 
   constructor() {
 

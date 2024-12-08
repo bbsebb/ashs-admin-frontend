@@ -1,7 +1,9 @@
 <div>
   <div class="coach-card-list">
-    @for(coach of _paginatedResourceCoaches().getEmbedded("coaches")  ; track coach.getSelfLink().href) {
-      <app-coach-card [coach]="coach" (deleteCoach)="onDeleteCoachEvent($event)" (modifyCoach)="onModifyCoachEvent($event)"></app-coach-card>
+    @if(_paginatedResourceCoaches().hasEmbedded("coaches")) {
+      @for(coach of _paginatedResourceCoaches().getEmbedded("coaches")  ; track coach.getSelfLink().href) {
+        <app-coach-card [coach]="coach" (deleteCoach)="onDeleteCoachEvent($event)" (modifyCoach)="onModifyCoachEvent($event)"></app-coach-card>
+      }
     }
   </div>
 

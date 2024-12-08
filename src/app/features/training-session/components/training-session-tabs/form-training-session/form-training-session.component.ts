@@ -1,6 +1,6 @@
-import {Component, inject, input, InputSignal, OnInit, output, Signal} from '@angular/core';
-import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
-import {ITrainingSessions, TrainingSession} from "../../../../../share/models/training-session";
+import {Component, inject, input, InputSignal, OnInit, output, Signal, viewChild} from '@angular/core';
+import {FormBuilder, FormGroup, FormGroupDirective, ReactiveFormsModule, Validators} from "@angular/forms";
+import {ITrainingSession, TrainingSession} from "../../../../../share/models/training-session";
 import {MatCard, MatCardTitle} from "@angular/material/card";
 import {MatError, MatFormField, MatLabel} from "@angular/material/form-field";
 import {MatInput} from "@angular/material/input";
@@ -14,7 +14,9 @@ import {toSignal} from "@angular/core/rxjs-interop";
 import {PaginatedResource} from "../../../../../share/models/hal-forms/paginated-resource";
 import {TimeSlot} from "../../../../../share/models/time-slot";
 import {GoogleMapsModule} from "@angular/google-maps";
-import {DayOfWeekPipe} from "../../../../../share/pipe/day-of-week.pipe";
+import {DayOfWeekPipe} from "../../../../../share/pipes/day-of-week.pipe";
+import {Router} from "@angular/router";
+import {timeSlotValidator} from "../../../../../share/validators/time-slot.validator";
 
 
 @Component({
@@ -38,25 +40,33 @@ import {DayOfWeekPipe} from "../../../../../share/pipe/day-of-week.pipe";
   styleUrl: './form-training-session.component.scss'
 })
 export class FormTrainingSessionComponent implements OnInit {
-  private fb: FormBuilder = inject(FormBuilder);
-  private hallService: HallService = inject(HallService);
+  private readonly fb: FormBuilder = inject(FormBuilder);
+  private readonly hallService: HallService = inject(HallService);
+  private readonly router: Router = inject(Router);
+  private readonly formDirective = viewChild.required<FormGroupDirective>('formDirective');
+  protected readonly DayOfWeek = DayOfWeek;
+  protected readonly Object = Object;
   inputSignal: InputSignal<TrainingSession | undefined> = input<TrainingSession | undefined>(undefined,{alias: 'trainingSession'});
   submitSaveTrainingSession = output<TrainingSession>();
   submitUpdateTrainingSession = output<TrainingSession>()
-  trainingSessionForm!: FormGroup ;
+  trainingSessionForm!: FormGroup;
 
   hallList = toSignal<PaginatedResource<Hall>>(this.hallService.getHalls());
+  compareHalls(h1: Hall, h2: Hall): boolean {
+    return h1 && h2 ? h1.id === h2.id : h1 === h2;
+  }
 
 
 
   ngOnInit(): void {
     // Initialisation du formulaire
-    // Initialisation du formulaire
 
     this.trainingSessionForm = this.fb.group({
-      dayOfWeek: ['', Validators.required],
-      startTime: ['', Validators.required],
-      endTime: ['', Validators.required],
+      timeSlot: this.fb.group({
+        dayOfWeek: ['', Validators.required],
+        startTime: ['', Validators.required],
+        endTime: ['', Validators.required],
+      }, {validators: timeSlotValidator()}),
       hall: [null, Validators.required],
     });
     const temp = this.inputSignal();
@@ -71,49 +81,37 @@ export class FormTrainingSessionComponent implements OnInit {
         hall: temp.hall,
       });
     }
+
   }
 
-  onSubmit(): void {
-    const trainingSessionValue = this.extractTrainingSession();
+    onSubmit(formDirective: FormGroupDirective): void {
     const trainingSession = this.inputSignal();
     if(trainingSession) {
-      this.submitUpdateTrainingSession.emit(TrainingSession.update(trainingSession,trainingSessionValue));
+      this.submitUpdateTrainingSession.emit(TrainingSession.update(trainingSession,this.trainingSessionForm.value));
     } else {
-      this.submitSaveTrainingSession.emit(TrainingSession.create(trainingSessionValue));
+      this.submitSaveTrainingSession.emit(new TrainingSession(this.trainingSessionForm.value));
     }
-  }
-
-  private extractTrainingSession() {
-    const formValues = this.trainingSessionForm.value;
-
-    // Reconstruire l'objet timeSlot avec les champs à plat
-    const timeSlot: TimeSlot = {
-      dayOfWeek: formValues.dayOfWeek,
-      startTime: formValues.startTime,
-      endTime: formValues.endTime,
-    };
-
-    const trainingSessionValue: ITrainingSessions = {
-      timeSlot: timeSlot,
-      hall: formValues.hall,
-    };
-    return trainingSessionValue;
   }
 
   hasError(field: string): boolean {
     return this.trainingSessionForm.get(field)?.invalid || false;
   }
 
-  displayError(field: string): string {
-    if (this.trainingSessionForm.get(field)?.hasError('required')) {
+  displayError(fieldName: string): string {
+    const field = this.trainingSessionForm.get(fieldName);
+    if (field?.hasError('required')) {
       return 'Ce champ est obligatoire';
-    } else if (this.trainingSessionForm.get(field)?.hasError('email')) {
+    } else if (field?.hasError('email')) {
       return 'Email invalide';
+    } else if(field?.hasError('invalidTimeSlot')) {
+      return `L'heure de début doit être antérieure à l'heure de fin.`;
     } else {
       return '';
     }
   }
 
-  protected readonly DayOfWeek = DayOfWeek;
-  protected readonly Object = Object;
+  public reset():void {
+    this.formDirective().resetForm();
+    this.trainingSessionForm.reset();
+  }
 }

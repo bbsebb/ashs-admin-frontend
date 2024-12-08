@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component, effect, inject, signal, WritableSignal} from '@angular/core';
+import {ChangeDetectorRef, Component, effect, inject, signal, viewChild, WritableSignal} from '@angular/core';
 import {MatTab, MatTabGroup} from "@angular/material/tabs";
 import {ViewCoachesComponent} from "./view-coaches/view-coaches.component";
 import {FormCoachComponent} from "./form-coach/form-coach.component";
@@ -21,15 +21,15 @@ import {PageEvent} from "@angular/material/paginator";
 })
 export class CoachTabsComponent {
 
+
   coachService: CoachService = inject(CoachService);
-
-
   coachUpdatingSignal = signal<Coach | undefined>(undefined);
+  coachFormComponentSignal = viewChild(FormCoachComponent);
 
 
 
   private _selectedTabIndex: number = 0;
-  paginatedResourceSignal: WritableSignal<PaginatedResource<Coach>> = signal(new PaginatedResource<Coach>({_embedded: {coaches: [] as Coach[]}, page: {size:0,number:0,totalPages:0,totalElements:0}, _links: { self: { href: '' } }, _templates: {} }));
+  paginatedResourceSignal: WritableSignal<PaginatedResource<Coach>> = signal(new PaginatedResource<Coach>());
 
   constructor() {
     this.getCoaches();
@@ -66,8 +66,9 @@ export class CoachTabsComponent {
   onSubmitUpdateCoach(coach: Coach) {
     this.coachService.update(coach).subscribe({
       next: (value) => this.getCoaches(), //refresh
-      error: (err) => console.error('Erreur : ', err),
+      error: (err) => this.getCoaches(),
       complete: () => {
+        this.coachFormComponentSignal()?.reset()
         this.coachUpdatingSignal.set(undefined);
         this.selectedTabIndex = 0;
       }
@@ -77,8 +78,11 @@ export class CoachTabsComponent {
   onSubmitSaveCoach(coach: Coach) {
     this.coachService.save(coach,this.paginatedResourceSignal().getTemplate("createCoach").target).subscribe({
       next: (value) => this.getCoaches(), //refresh
-      error: (err) => console.error('Erreur : ', err),
-      complete: () => this.selectedTabIndex = 0
+      error: (err) => this.getCoaches(),
+      complete: () => {
+        this.coachFormComponentSignal()?.reset()
+        this.selectedTabIndex = 0
+      }
     });
   }
 
@@ -88,8 +92,8 @@ export class CoachTabsComponent {
     } );
   }
 
-  onUpdateCoachEvent($event: Coach) {
+  onUpdateCoachEvent(coach: Coach) {
     this.selectedTabIndex = 2;
-    this.coachUpdatingSignal.set($event);
+    this.coachUpdatingSignal.set(coach);
   }
 }

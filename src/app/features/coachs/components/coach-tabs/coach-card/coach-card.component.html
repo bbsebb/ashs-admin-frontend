@@ -7,12 +7,14 @@
       <p><mat-icon>call</mat-icon>{{_coach().phone}}</p>
       <p><mat-icon>email</mat-icon>{{_coach().email}}</p>
     </mat-card-content>
+  @if(_coach().hasTemplate("updateCoach") || _coach().hasTemplate("deleteCoach")) {
   <mat-card-actions [align]="'end'">
-    @if(_coach().getTemplate("updateCoach")) {
+    @if(_coach().hasTemplate("updateCoach")) {
       <button mat-button (click)="onModify()">Modifier</button>
     }
-    @if(_coach().getTemplate("deleteCoach")) {
+    @if(_coach().hasTemplate("deleteCoach")) {
       <button mat-button (click)="onDelete()">Supprimer</button>
     }
   </mat-card-actions>
+  }
 </mat-card>

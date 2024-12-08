@@ -1,14 +1,17 @@
 <div>
   <div class="coach-card-list">
-    @for(team of _paginatedResourceTeams().getEmbedded("teams")  ; track team.getSelfLink().href) {
-      <app-team-card [team]="team" (deleteTeam)="onDeleteTeamEvent($event)" (modifyTeam)="onModifyTeamEvent($event)"></app-team-card>
+    @if(paginatedResourceTeamsSignal().hasEmbedded("teams")) {
+      @for (team of paginatedResourceTeamsSignal().getEmbedded("teams"); track team.getSelfLink().href) {
+        <app-team-card [team]="team" (deleteTeam)="onDeleteTeamEvent($event)"
+                       (modifyTeam)="onModifyTeamEvent($event)"></app-team-card>
+      }
     }
   </div>
 
   <mat-paginator
-    [length]="_paginatedResourceTeams().page.totalElements"
-    [pageSize]="_paginatedResourceTeams().page.size"
-    [pageIndex]="_paginatedResourceTeams().page.number"
+    [length]="paginatedResourceTeamsSignal().page.totalElements"
+    [pageSize]="paginatedResourceTeamsSignal().page.size"
+    [pageIndex]="paginatedResourceTeamsSignal().page.number"
     (page)="onHandlePageEvent($event)"
 
     [showFirstLastButtons]="true"

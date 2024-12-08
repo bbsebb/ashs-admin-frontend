@@ -36,11 +36,18 @@ export class PaginatedResource<T extends Resource> extends Resource implements P
 
 
   getEmbedded(key: string): T[] {
-    const embedded = this._embedded[key];
-    if (!embedded) {
+    if (!this.hasEmbedded(key)) {
       throw new Error(`Embedded with key "${key}" not found.`);
     }
-    return embedded;
+    return this._embedded[key];
+  }
+
+  hasEmbedded(key: string): boolean {
+    if(this._embedded) {
+      const embedded = this._embedded[key];
+      return !!embedded;
+    }
+    return false;
   }
 
   setEmbedded(key: string, value: T[]): void {

@@ -1,4 +1,4 @@
-import {Component, effect, inject, signal, WritableSignal} from '@angular/core';
+import {Component, effect, inject, OnInit, signal, viewChild, WritableSignal} from '@angular/core';
 import {MatTab, MatTabGroup} from "@angular/material/tabs";
 import {PaginatedResource} from "../../../../share/models/hal-forms/paginated-resource";
 import {PageEvent} from "@angular/material/paginator";
@@ -6,6 +6,10 @@ import {HallService} from "../../../../share/services/hall.service";
 import {Hall} from "../../../../share/models/hall";
 import {FormHallComponent} from "./form-hall/form-hall.component";
 import {ViewHallsComponent} from "./view-halls/view-halls.component";
+import {ActivatedRoute} from "@angular/router";
+import {concatMap} from "rxjs";
+import {FormCoachComponent} from "../../../coachs/components/coach-tabs/form-coach/form-coach.component";
+
 
 @Component({
   selector: 'app-hall-tabs',
@@ -19,18 +23,34 @@ import {ViewHallsComponent} from "./view-halls/view-halls.component";
   templateUrl: './hall-tabs.component.html',
   styleUrl: './hall-tabs.component.scss'
 })
-export class HallTabsComponent {
-
+export class HallTabsComponent implements OnInit {
+  private hallService: HallService = inject(HallService);
+  private route = inject(ActivatedRoute);
 
   hallUpdatingSignal = signal<Hall | undefined>(undefined);
+  hallFormComponentSignal = viewChild(FormHallComponent);
 
-  hallService: HallService = inject(HallService);
+
 
   private _selectedTabIndex: number = 0;
-  paginatedResourceSignal: WritableSignal<PaginatedResource<Hall>> = signal(new PaginatedResource<Hall>({_embedded: {halls: [] as Hall[]}, page: {size:0,number:0,totalPages:0,totalElements:0}, _links: { self: { href: '' } }, _templates: {} }));
+  paginatedResourceSignal: WritableSignal<PaginatedResource<Hall>> = signal(new PaginatedResource<Hall>());
 
-  constructor() {
-    this.getHalls();
+
+  ngOnInit(): void {
+    this.hallService.getHalls()
+      .pipe(
+        concatMap(halls =>
+        {
+          this.paginatedResourceSignal.set(halls);
+          return this.route.queryParams;
+        })
+      )
+      .subscribe(
+      (params) => {
+        if (params['tab']) {
+          this.selectedTabIndex = parseInt(params['tab']) || 0;
+        }
+      });
   }
 
 // Setter pour selectedTabIndex qui capture les changements
@@ -63,9 +83,10 @@ export class HallTabsComponent {
   onSubmitUpdateHall(hall: Hall) {
     this.hallService.update(hall).subscribe({
       next: () => this.getHalls(), //refresh
-      error: (err) => console.error('Erreur : ', err),
+      error: (err) => this.getHalls(),
       complete: () => {
-        this.selectedTabIndex = 0
+        this.hallFormComponentSignal()?.reset();
+        this.selectedTabIndex = 0;
         this.hallUpdatingSignal.set(undefined);
       }
     })
@@ -74,8 +95,11 @@ export class HallTabsComponent {
   onSubmitSaveHall(hall: Hall) {
     this.hallService.save(hall,this.paginatedResourceSignal().getTemplate("createHall").target).subscribe({
       next: () => this.getHalls(), //refresh
-      error: (err) => console.error('Erreur : ', err),
-      complete: () => this.selectedTabIndex = 0
+      error: (err) => this.getHalls(),
+      complete: () => {
+        this.hallFormComponentSignal()?.reset();
+        this.selectedTabIndex = 0
+      }
     });
   }
 
@@ -89,5 +113,7 @@ export class HallTabsComponent {
     this.selectedTabIndex = 2;
     this.hallUpdatingSignal.set(hall);
   }
+
+
 
 }

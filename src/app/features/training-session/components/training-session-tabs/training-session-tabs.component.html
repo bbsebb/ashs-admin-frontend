@@ -8,9 +8,9 @@
     </mat-tab>
   }
 
-  @if(trainingSessionUpdating()!==undefined) {
+  @if(trainingSessionUpdatingSignal()!==undefined) {
     <mat-tab label="Modifier un créneau">
-      <app-form-training-session (submitUpdateTrainingSession)="onSubmitUpdateTrainingSession($event)" [trainingSession]="trainingSessionUpdating()"></app-form-training-session>
+      <app-form-training-session (submitUpdateTrainingSession)="onSubmitUpdateTrainingSession($event)" [trainingSession]="trainingSessionUpdatingSignal()"></app-form-training-session>
     </mat-tab>
   }
 </mat-tab-group>

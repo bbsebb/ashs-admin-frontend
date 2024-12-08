@@ -1,14 +1,18 @@
 <div>
   <div class="coach-card-list">
-    @for(trainingSession of _paginatedResourceTrainingSessions().getEmbedded("trainingSessions")  ; track trainingSession.getSelfLink().href) {
-      <app-training-session-card [trainingSession]="trainingSession" (deleteTrainingSession)="onDeleteTrainingSessionEvent($event)" (modifyTrainingSession)="onModifyTrainingSessionEvent($event)"></app-training-session-card>
+    @if(paginatedResourceTrainingSessionsSignal().hasEmbedded("trainingSessions")) {
+      @for(trainingSession of paginatedResourceTrainingSessionsSignal().getEmbedded("trainingSessions")  ; track trainingSession.id) {
+      <app-training-session-card [trainingSession]="trainingSession"
+                                 (deleteTrainingSession)="onDeleteTrainingSessionEvent($event)"
+                                 (modifyTrainingSession)="onModifyTrainingSessionEvent($event)"></app-training-session-card>
+      }
     }
   </div>
 
   <mat-paginator
-    [length]="_paginatedResourceTrainingSessions().page.totalElements"
-    [pageSize]="_paginatedResourceTrainingSessions().page.size"
-    [pageIndex]="_paginatedResourceTrainingSessions().page.number"
+    [length]="paginatedResourceTrainingSessionsSignal().page.totalElements"
+    [pageSize]="paginatedResourceTrainingSessionsSignal().page.size"
+    [pageIndex]="paginatedResourceTrainingSessionsSignal().page.number"
     (page)="onHandlePageEvent($event)"
 
     [showFirstLastButtons]="true"

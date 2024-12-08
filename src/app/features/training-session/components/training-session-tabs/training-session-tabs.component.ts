@@ -1,4 +1,4 @@
-import {Component, effect, inject, signal, WritableSignal} from '@angular/core';
+import {Component, inject, signal, viewChild, WritableSignal} from '@angular/core';
 import {PaginatedResource} from "../../../../share/models/hal-forms/paginated-resource";
 import {PageEvent} from "@angular/material/paginator";
 import {TrainingSession} from "../../../../share/models/training-session";
@@ -6,7 +6,6 @@ import {TrainingSessionService} from "../../../../share/services/training-sessio
 import {MatTab, MatTabGroup} from "@angular/material/tabs";
 import {ViewTrainingSessionsComponent} from "./view-training-sessions/view-training-sessions.component";
 import {FormTrainingSessionComponent} from "./form-training-session/form-training-session.component";
-import {ResourceService} from "../../../../share/services/resource.service";
 
 @Component({
   selector: 'app-training-session-tabs',
@@ -21,13 +20,12 @@ import {ResourceService} from "../../../../share/services/resource.service";
   styleUrl: './training-session-tabs.component.scss'
 })
 export class TrainingSessionTabsComponent {
-  trainingSessionUpdating = signal<TrainingSession | undefined>(undefined);
-
+  trainingSessionUpdatingSignal = signal<TrainingSession | undefined>(undefined);
+  trainingSessionFormComponentSignal = viewChild(FormTrainingSessionComponent);
   trainingSessionService: TrainingSessionService = inject(TrainingSessionService);
-  resourceService = inject(ResourceService);
 
   private _selectedTabIndex: number = 0;
-  paginatedResource: WritableSignal<PaginatedResource<TrainingSession>> = signal(new PaginatedResource<TrainingSession>({_embedded: {trainingSessions: [] as TrainingSession[]}, page: {size:0,number:0,totalPages:0,totalElements:0}, _links: { self: { href: '' } }, _templates: {} }));
+  paginatedResource: WritableSignal<PaginatedResource<TrainingSession>> = signal(new PaginatedResource<TrainingSession>());
 
   constructor() {
     this.getTrainingSessions();
@@ -41,14 +39,14 @@ export class TrainingSessionTabsComponent {
   set selectedTabIndex(index: number) {
     if (this.selectedTabIndex !== index) {
       if (this.selectedTabIndex === 2) {
-        this.trainingSessionUpdating.set(undefined);
+        this.trainingSessionUpdatingSignal.set(undefined);
       }
       this._selectedTabIndex = index;
     }
   }
 
   getTrainingSessions() {
-    this.trainingSessionService.getTrainingSessions().subscribe(trainingSessions => {
+    this.trainingSessionService.getTrainingSessions(0,20,['timeSlot_dayOfWeek,asc']).subscribe(trainingSessions => {
       this.paginatedResource.set(trainingSessions);
     })
   }
@@ -63,10 +61,11 @@ export class TrainingSessionTabsComponent {
   onSubmitUpdateTrainingSession(trainingSession: TrainingSession) {
     this.trainingSessionService.update(trainingSession).subscribe({
       next: () => this.getTrainingSessions(), //refresh
-      error: (err) => console.error('Erreur : ', err),
+      error: (err) => this.getTrainingSessions(),
       complete: () => {
+        this.trainingSessionFormComponentSignal()?.reset();
+        this.trainingSessionUpdatingSignal.set(undefined);
         this.selectedTabIndex = 0;
-        this.trainingSessionUpdating.set(undefined);
       }
     })
   }
@@ -74,8 +73,11 @@ export class TrainingSessionTabsComponent {
   onSubmitSaveTrainingSession(trainingSession: TrainingSession) {
     this.trainingSessionService.save(trainingSession,this.paginatedResource().getTemplate("createTrainingSession").target).subscribe({
       next: () => this.getTrainingSessions(), //refresh
-      error: (err) => console.error('Erreur : ', err),
-      complete: () => this.selectedTabIndex = 0
+      error: (err) => this.getTrainingSessions(),
+      complete: () => {
+        this.trainingSessionFormComponentSignal()?.reset();
+        this.selectedTabIndex = 0
+      }
     });
   }
 
@@ -87,7 +89,7 @@ export class TrainingSessionTabsComponent {
 
   onUpdateTrainingSessionEvent(trainingSession: TrainingSession) {
     this.selectedTabIndex = 2;
-    this.trainingSessionUpdating.set(trainingSession);
+    this.trainingSessionUpdatingSignal.set(trainingSession);
   }
 
 }

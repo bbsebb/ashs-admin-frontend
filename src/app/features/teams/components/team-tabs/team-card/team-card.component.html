@@ -1,15 +1,30 @@
 <mat-card class="coach-card">
   <mat-card-header>
-    <div mat-card-avatar class="example-header-image"></div>
-    <mat-card-title>{{_team().category}} </mat-card-title>
-
+    <mat-card-title>{{team().category | category}} {{team().teamNumber}}  {{team().gender | gender}}</mat-card-title>
   </mat-card-header>
-  <mat-card-actions [align]="'end'">
-    @if(_team().getTemplate("updateTeam")) {
-      <button mat-button (click)="onModify()">Modifier</button>
+  <mat-card-content>
+    <h3>Créneaux d'entrainement</h3>
+    @for(trainingSession of team().trainingSessions;track trainingSession.id) {
+      <p>{{ trainingSession.timeSlot.dayOfWeek | dayOfWeekToFrench }}
+        de {{ trainingSession.timeSlot.startTime | timeFormat }}
+        à {{ trainingSession.timeSlot.endTime | timeFormat }}
+        <button mat-stroked-button (click)="openHallDialog(trainingSession.hall)">
+          <mat-icon>house</mat-icon>
+          {{ trainingSession.hall.name }}</button></p>
     }
-    @if(_team().getTemplate("deleteTeam")) {
-      <button mat-button (click)="onDelete()">Supprimer</button>
+    <h3>Entraineur(s)</h3>
+    @for (coach of team().coaches;track coach.id) {
+      <p>{{ coach.name }} {{ coach.surname }}</p>
     }
-  </mat-card-actions>
+  </mat-card-content>
+  @if(team().hasTemplate("updateTeam") || team().hasTemplate("deleteTeam")) {
+    <mat-card-actions [align]="'end'">
+      @if (team().hasTemplate("updateTeam")) {
+        <button mat-button (click)="onModify()">Modifier</button>
+      }
+      @if (team().hasTemplate("deleteTeam")) {
+        <button mat-button (click)="onDelete()">Supprimer</button>
+      }
+    </mat-card-actions>
+  }
 </mat-card>

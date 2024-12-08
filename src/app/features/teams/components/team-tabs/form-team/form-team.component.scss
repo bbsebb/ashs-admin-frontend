@@ -6,7 +6,7 @@ mat-form-field {
 mat-card {
   padding: 16px;
   max-width: 600px;
-  margin: auto;
+  margin: 20px auto;
 }
 
 mat-card-title {
@@ -19,4 +19,16 @@ mat-card-title {
   display: flex;
   justify-content: flex-end;
   margin-top: 16px;
+}
+
+.add-session-button{
+  text-align: right;
+}
+
+.training-sessions-title {
+  display: flex;
+  justify-content: space-between;
+  button {
+
+  }
 }
