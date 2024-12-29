@@ -2,7 +2,6 @@ import {Resource} from "./hal-forms/resource";
 import {HalForms} from "./hal-forms/hal-forms";
 import {Gender} from "./gender";
 import {TrainingSession} from "./training-session";
-import {IHall} from "./hall";
 import {Category} from "./Category";
 import {Coach} from "./coach";
 

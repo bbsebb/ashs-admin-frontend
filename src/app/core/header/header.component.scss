@@ -1,7 +1,3 @@
-@use 'styles/theme' as variables;
-@use '@angular/material' as mat;
-
-$background_color: mat.get-theme-color(variables.$my-theme, primary);
 
 mat-toolbar {
 
@@ -9,7 +5,7 @@ mat-toolbar {
   position: fixed;
   padding-left: calc(20px + (100% - 1200px) / 2);
   padding-right: calc(20px + (100% - 1200px) / 2);
-  box-shadow: 0 4px 8px rgba(darken($background_color, 20%), 0.2);
+  /*box-shadow: 0 4px 8px rgba(darken($background_color, 20%), 0.2);*/
   z-index: 1000;
 
   > * {
@@ -19,13 +15,6 @@ mat-toolbar {
 
   .left-menu {
     max-width: 50%;
-    flex-grow: 2;
-  }
-
-  .right-menu {
-    max-width: 50%;
-    display: flex;
-    justify-content: flex-end;
     flex-grow: 2;
   }
 

@@ -2,10 +2,10 @@ import {Component, inject, signal, viewChild, WritableSignal} from '@angular/cor
 import {PaginatedResource} from "../../../../share/models/hal-forms/paginated-resource";
 import {PageEvent} from "@angular/material/paginator";
 import {TrainingSession} from "../../../../share/models/training-session";
-import {TrainingSessionService} from "../../../../share/services/training-session.service";
 import {MatTab, MatTabGroup} from "@angular/material/tabs";
 import {ViewTrainingSessionsComponent} from "./view-training-sessions/view-training-sessions.component";
 import {FormTrainingSessionComponent} from "./form-training-session/form-training-session.component";
+import {ITrainingSessionService, TRAINING_SESSION_SERVICE} from "../../../../share/services/i-training-session.service";
 
 @Component({
     selector: 'app-training-session-tabs',
@@ -21,7 +21,7 @@ import {FormTrainingSessionComponent} from "./form-training-session/form-trainin
 export class TrainingSessionTabsComponent {
   trainingSessionUpdatingSignal = signal<TrainingSession | undefined>(undefined);
   trainingSessionFormComponentSignal = viewChild(FormTrainingSessionComponent);
-  trainingSessionService: TrainingSessionService = inject(TrainingSessionService);
+  trainingSessionService: ITrainingSessionService = inject(TRAINING_SESSION_SERVICE);
 
   private _selectedTabIndex: number = 0;
   paginatedResource: WritableSignal<PaginatedResource<TrainingSession>> = signal(new PaginatedResource<TrainingSession>());
@@ -60,7 +60,7 @@ export class TrainingSessionTabsComponent {
   onSubmitUpdateTrainingSession(trainingSession: TrainingSession) {
     this.trainingSessionService.update(trainingSession).subscribe({
       next: () => this.getTrainingSessions(), //refresh
-      error: (err) => this.getTrainingSessions(),
+      error: () => this.getTrainingSessions(),
       complete: () => {
         this.trainingSessionFormComponentSignal()?.reset();
         this.trainingSessionUpdatingSignal.set(undefined);
@@ -72,7 +72,7 @@ export class TrainingSessionTabsComponent {
   onSubmitSaveTrainingSession(trainingSession: TrainingSession) {
     this.trainingSessionService.save(trainingSession,this.paginatedResource().getTemplate("createTrainingSession").target).subscribe({
       next: () => this.getTrainingSessions(), //refresh
-      error: (err) => this.getTrainingSessions(),
+      error: () => this.getTrainingSessions(),
       complete: () => {
         this.trainingSessionFormComponentSignal()?.reset();
         this.selectedTabIndex = 0

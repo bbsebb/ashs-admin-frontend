@@ -1,4 +1,4 @@
-import {Component, effect, inject, input, InputSignal, OnInit, output, viewChild} from '@angular/core';
+import {Component, inject, input, InputSignal, OnInit, output, viewChild} from '@angular/core';
 import {MatCard, MatCardTitle} from "@angular/material/card";
 import {MatError, MatFormField, MatLabel} from "@angular/material/form-field";
 import {MatInput} from "@angular/material/input";

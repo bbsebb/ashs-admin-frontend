@@ -6,20 +6,18 @@ import {MatError, MatFormField, MatLabel} from "@angular/material/form-field";
 import {Gender} from "../../../../../share/models/gender";
 import {MatOption} from "@angular/material/autocomplete";
 import {MatSelect} from "@angular/material/select";
-import {MatButton, MatIconButton, MatMiniFabButton} from "@angular/material/button";
+import {MatButton, MatIconButton} from "@angular/material/button";
 import {MatInput} from "@angular/material/input";
 import {Category} from "../../../../../share/models/Category";
-import {TrainingSessionService} from "../../../../../share/services/training-session.service";
 import {toSignal} from "@angular/core/rxjs-interop";
 import {DayOfWeekPipe} from "../../../../../share/pipes/day-of-week.pipe";
-import {TimePipe} from "../../../../../share/pipes/time.pipe";
-import {CoachService} from "../../../../../share/services/coach.service";
 import {DayOfWeek} from "../../../../../share/models/day-of-week";
 import {PaginatedResource} from "../../../../../share/models/hal-forms/paginated-resource";
 import {Hall} from "../../../../../share/models/hall";
-import {HallService} from "../../../../../share/services/hall.service";
 import {MatIcon} from "@angular/material/icon";
 import {timeSlotValidator} from "../../../../../share/validators/time-slot.validator";
+import {HALL_SERVICE} from "../../../../../share/services/i-hall.service";
+import {COACH_SERVICE} from "../../../../../share/services/i-coach.service";
 
 @Component({
     selector: 'app-form-team',
@@ -36,9 +34,7 @@ import {timeSlotValidator} from "../../../../../share/validators/time-slot.valid
         MatInput,
         MatIcon,
         DayOfWeekPipe,
-        TimePipe,
         MatCardActions,
-        MatMiniFabButton,
         MatIconButton
     ],
     templateUrl: './form-team.component.html',
@@ -47,9 +43,8 @@ import {timeSlotValidator} from "../../../../../share/validators/time-slot.valid
 export class FormTeamComponent implements OnInit {
   readonly formDirective = viewChild.required<FormGroupDirective>('formDirective');
   private fb: FormBuilder = inject(FormBuilder);
-  trainingSessions = toSignal(inject(TrainingSessionService).getTrainingSessions());
-  coaches = toSignal(inject(CoachService).getCoaches());
-  hallList = toSignal<PaginatedResource<Hall>>(inject(HallService).getHalls());
+  coachesSignal = toSignal(inject(COACH_SERVICE).getCoaches());
+  hallsSignal = toSignal<PaginatedResource<Hall>>(inject(HALL_SERVICE).getHalls());
   teamSignal: InputSignal<Team | undefined> = input<Team | undefined>(undefined,{alias: 'team'});
   submitSaveTeam = output<Team>();
   submitUpdateTeam = output<Team>()
@@ -67,8 +62,6 @@ export class FormTeamComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
-
     // Initialisation du formulaire
     this.teamForm = this.fb.group({
       category: ['', Validators.required],
@@ -114,7 +107,7 @@ export class FormTeamComponent implements OnInit {
     });
   }
 
-  onSubmit(formDirective: FormGroupDirective): void {
+  onSubmit(): void {
     const team = this.teamSignal()
     if(team) {
       const updatedTeam = Team.update(team,this.teamForm.value);

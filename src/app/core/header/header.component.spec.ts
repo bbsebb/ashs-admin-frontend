@@ -1,11 +1,11 @@
-import {ComponentFixture, fakeAsync, TestBed, tick} from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
 import { HeaderComponent } from './header.component';
 import {SidenavOpeningService} from "../../services/sidenav-opening.service";
 import {By} from "@angular/platform-browser";
 import {ScrollDispatcher, ViewportRuler} from "@angular/cdk/overlay";
-import {BrowserAnimationsModule, NoopAnimationsModule} from "@angular/platform-browser/animations";
-import {from, Observable, of, take} from "rxjs";
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import {from, of} from "rxjs";
 import {MatIconTestingModule} from "@angular/material/icon/testing";
 import {ActivatedRoute} from "@angular/router";
 

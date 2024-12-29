@@ -1,10 +1,8 @@
-import {Component, computed, inject, input, InputSignal, OnInit, output} from '@angular/core';
+import {Component, inject, input, InputSignal, output} from '@angular/core';
 
 import {MatButton} from "@angular/material/button";
 import {
-  MatCard,
   MatCardActions,
-  MatCardAvatar,
   MatCardContent,
   MatCardHeader, MatCardModule,
   MatCardTitle
@@ -14,9 +12,7 @@ import {MatIcon} from "@angular/material/icon";
 import {DurationPipe} from "../../../../../share/pipes/duration.pipe";
 import {DayOfWeekPipe} from "../../../../../share/pipes/day-of-week.pipe";
 import {TimePipe} from "../../../../../share/pipes/time.pipe";
-import {MatDivider} from "@angular/material/divider";
 import {MatDialog} from "@angular/material/dialog";
-import {HallCardComponent} from "../../../../halls/components/hall-tabs/hall-card/hall-card.component";
 import {HallCardDialogComponent} from "../../../../halls/components/hall-card-dialog/hall-card-dialog.component";
 import {Resource} from "../../../../../share/models/hal-forms/resource";
 import {ConfirmDialogComponent} from "../../../../../share/components/dialog/confirm-dialog.component";
@@ -28,16 +24,13 @@ import {ConfirmDialogComponent} from "../../../../../share/components/dialog/con
         MatButton,
         MatCardModule,
         MatCardActions,
-        MatCardAvatar,
         MatCardHeader,
         MatCardTitle,
         MatCardContent,
         MatIcon,
         DurationPipe,
         DayOfWeekPipe,
-        TimePipe,
-        MatDivider,
-        HallCardComponent
+        TimePipe
     ],
     templateUrl: './training-session-card.component.html',
     styleUrl: './training-session-card.component.scss'

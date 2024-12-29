@@ -1,11 +1,11 @@
 import {Component, inject, signal, viewChild, WritableSignal} from '@angular/core';
 import {Team} from "../../../../share/models/team";
-import {TeamService} from "../../../../share/services/team.service";
 import {PaginatedResource} from "../../../../share/models/hal-forms/paginated-resource";
 import {PageEvent} from "@angular/material/paginator";
 import {MatTab, MatTabGroup} from "@angular/material/tabs";
 import {ViewTeamsComponent} from "./view-teams/view-teams.component";
 import {FormTeamComponent} from "./form-team/form-team.component";
+import {ITeamService, TEAM_SERVICE} from "../../../../share/services/i-team.service";
 
 
 @Component({
@@ -23,7 +23,7 @@ export class TeamTabsComponent {
   teamUpdating = signal<Team | undefined>(undefined);
   teamFormComponentSignal = viewChild(FormTeamComponent)
 
-  teamService: TeamService = inject(TeamService);
+  teamService: ITeamService = inject(TEAM_SERVICE);
 
   private _selectedTabIndex: number = 0;
   paginatedResource: WritableSignal<PaginatedResource<Team>> = signal(new PaginatedResource<Team>());

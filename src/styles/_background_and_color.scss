@@ -1,7 +1,0 @@
-@use 'styles/background' as background;
-@use 'styles/color' as color;
-// Mixin pour combiner la couleur de fond et la couleur du texte
-@mixin theme-colors($keyword: 'primary') {
-  @include background.background-color($keyword);
-  @include color.text-color($keyword);
-}

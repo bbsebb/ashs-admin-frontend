@@ -4,19 +4,14 @@ import {
   inject,
   input,
   InputSignal,
-  OnInit,
   output,
-  OutputEmitterRef,
   ViewChild
 } from '@angular/core';
 import {MatButton} from "@angular/material/button";
 import {
   MatCard,
   MatCardActions,
-  MatCardAvatar,
-  MatCardContent,
   MatCardHeader,
-  MatCardSubtitle,
   MatCardTitle
 } from "@angular/material/card";
 import {Hall} from "../../../../../share/models/hall";
@@ -39,11 +34,8 @@ import {MatDialog} from "@angular/material/dialog";
         MatButton,
         MatCard,
         MatCardActions,
-        MatCardAvatar,
         MatCardHeader,
-        MatCardSubtitle,
         MatCardTitle,
-        MatCardContent,
         GoogleMapsModule,
         GoogleMap
     ],

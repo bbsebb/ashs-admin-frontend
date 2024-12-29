@@ -1,6 +1,6 @@
 <mat-card>
   <mat-card-title>Formulaire d'équipe</mat-card-title>
-  <form [formGroup]="teamForm" #formDirective="ngForm" (ngSubmit)="onSubmit(formDirective)">
+  <form [formGroup]="teamForm" #formDirective="ngForm" (ngSubmit)="onSubmit()">
 
     <!-- Champ pour le numéro de l'équipe -->
     <mat-form-field appearance="fill">
@@ -85,8 +85,8 @@
           <mat-form-field class="full-width" appearance="outline">
             <mat-label>Sélectionner la salle</mat-label>
             <mat-select formControlName="hall" [compareWith]="compareHalls">
-              @if(hallList()?.hasEmbedded("halls")) {
-                @for (hall of hallList()?.getEmbedded("halls"); track hall.id) {
+              @if(hallsSignal()?.hasEmbedded("halls")) {
+                @for (hall of hallsSignal()?.getEmbedded("halls"); track hall.id) {
                   <mat-option [value]="hall">{{ hall.name }}</mat-option>
                 }
               }
@@ -113,8 +113,8 @@
     <mat-form-field class="full-width" appearance="outline">
       <mat-label>Sélection des entraineurs</mat-label>
       <mat-select formControlName="coaches" multiple [compareWith]="compareCoaches">
-        @if(hallList()?.hasEmbedded("coaches")) {
-          @for (coaches of coaches()?.getEmbedded("coaches");track coaches) {
+        @if(coachesSignal()?.hasEmbedded("coaches")) {
+          @for (coaches of coachesSignal()?.getEmbedded("coaches");track coaches.id) {
             <mat-option [value]="coaches">{{ coaches.name }} {{ coaches.surname}}</mat-option>
           }
         }
@@ -125,6 +125,6 @@
     </mat-form-field>
   </form>
   <mat-card-actions [align]="'end'">
-    <button mat-raised-button color="primary" type="submit" (click)="onSubmit(formDirective)" [disabled]="teamForm.invalid">Soumettre</button>
+    <button mat-raised-button color="primary" type="submit" (click)="onSubmit()" [disabled]="teamForm.invalid">Soumettre</button>
   </mat-card-actions>
 </mat-card>

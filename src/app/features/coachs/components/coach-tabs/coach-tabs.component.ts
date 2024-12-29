@@ -1,11 +1,11 @@
-import {ChangeDetectorRef, Component, effect, inject, signal, viewChild, WritableSignal} from '@angular/core';
+import {Component, inject, signal, viewChild, WritableSignal} from '@angular/core';
 import {MatTab, MatTabGroup} from "@angular/material/tabs";
 import {ViewCoachesComponent} from "./view-coaches/view-coaches.component";
 import {FormCoachComponent} from "./form-coach/form-coach.component";
 import {Coach} from "../../../../share/models/coach";
-import {CoachService} from "../../../../share/services/coach.service";
 import {PaginatedResource} from "../../../../share/models/hal-forms/paginated-resource";
 import {PageEvent} from "@angular/material/paginator";
+import {COACH_SERVICE, ICoachService} from "../../../../share/services/i-coach.service";
 
 @Component({
     selector: 'app-coach-tabs',
@@ -21,7 +21,7 @@ import {PageEvent} from "@angular/material/paginator";
 export class CoachTabsComponent {
 
 
-  coachService: CoachService = inject(CoachService);
+  coachService: ICoachService = inject(COACH_SERVICE);
   coachUpdatingSignal = signal<Coach | undefined>(undefined);
   coachFormComponentSignal = viewChild(FormCoachComponent);
 

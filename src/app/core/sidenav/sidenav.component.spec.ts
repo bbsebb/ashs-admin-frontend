@@ -1,9 +1,12 @@
+// noinspection JSDeprecatedSymbols
+
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 import {SidenavComponent} from './sidenav.component';
-import {SidenavOpeningService} from "../../services/sidenav-opening.service";
+
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {MatSidenavModule} from "@angular/material/sidenav";
-import {RouterTestingModule} from "@angular/router/testing";
+import {SidenavOpeningService} from "../services/sidenav-opening.service";
+
 
 
 describe('SidenavComponent', () => {
@@ -14,7 +17,7 @@ describe('SidenavComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [SidenavComponent,MatSidenavModule, NoopAnimationsModule,RouterTestingModule],
+      imports: [SidenavComponent,MatSidenavModule, NoopAnimationsModule],
       providers: [
         { provide: SidenavOpeningService, useValue: mockService },
 

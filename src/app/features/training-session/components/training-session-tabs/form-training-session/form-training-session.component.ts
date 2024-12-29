@@ -1,6 +1,6 @@
-import {Component, inject, input, InputSignal, OnInit, output, Signal, viewChild} from '@angular/core';
+import {Component, inject, input, InputSignal, OnInit, output, viewChild} from '@angular/core';
 import {FormBuilder, FormGroup, FormGroupDirective, ReactiveFormsModule, Validators} from "@angular/forms";
-import {ITrainingSession, TrainingSession} from "../../../../../share/models/training-session";
+import {TrainingSession} from "../../../../../share/models/training-session";
 import {MatCard, MatCardTitle} from "@angular/material/card";
 import {MatError, MatFormField, MatLabel} from "@angular/material/form-field";
 import {MatInput} from "@angular/material/input";
@@ -12,7 +12,6 @@ import {Hall} from "../../../../../share/models/hall";
 import {HallService} from "../../../../../share/services/hall.service";
 import {toSignal} from "@angular/core/rxjs-interop";
 import {PaginatedResource} from "../../../../../share/models/hal-forms/paginated-resource";
-import {TimeSlot} from "../../../../../share/models/time-slot";
 import {GoogleMapsModule} from "@angular/google-maps";
 import {DayOfWeekPipe} from "../../../../../share/pipes/day-of-week.pipe";
 import {Router} from "@angular/router";

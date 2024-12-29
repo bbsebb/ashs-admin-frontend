@@ -2,20 +2,21 @@ import {Component, effect, inject, Injector, OnInit, runInInjectionContext} from
 import {MatSidenavModule} from "@angular/material/sidenav";
 
 import {BooleanInput} from "@angular/cdk/coercion";
-import {RouterLink, RouterOutlet} from "@angular/router";
+import {RouterLink, RouterLinkActive, RouterOutlet} from "@angular/router";
 import {MatListItem, MatNavList} from "@angular/material/list";
 import {SidenavOpeningService} from "../services/sidenav-opening.service";
 
 
 @Component({
     selector: 'app-sidenav',
-    imports: [
-        MatSidenavModule,
-        RouterOutlet,
-        MatListItem,
-        MatNavList,
-        RouterLink
-    ],
+  imports: [
+    MatSidenavModule,
+    RouterOutlet,
+    MatListItem,
+    MatNavList,
+    RouterLink,
+    RouterLinkActive
+  ],
     templateUrl: './sidenav.component.html',
     styleUrl: './sidenav.component.scss'
 })

@@ -2,7 +2,6 @@ import {Component, input, InputSignal, output} from '@angular/core';
 import {MatCardModule} from "@angular/material/card";
 import {Coach} from "../../../../../share/models/coach";
 import {MatButtonModule} from "@angular/material/button";
-import {endWith} from "rxjs";
 import {MatIcon} from "@angular/material/icon";
 
 @Component({
@@ -21,7 +20,7 @@ export class CoachCardComponent {
   modifyCoach= output<Coach>({alias: 'modifyCoach'});
 
 
-  protected readonly endWith = endWith;
+
 
   onModify() {
     this.modifyCoach.emit(this._coach());

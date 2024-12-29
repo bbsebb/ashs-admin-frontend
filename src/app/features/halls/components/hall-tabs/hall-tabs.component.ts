@@ -1,14 +1,13 @@
-import {Component, effect, inject, OnInit, signal, viewChild, WritableSignal} from '@angular/core';
+import {Component, inject, OnInit, signal, viewChild, WritableSignal} from '@angular/core';
 import {MatTab, MatTabGroup} from "@angular/material/tabs";
 import {PaginatedResource} from "../../../../share/models/hal-forms/paginated-resource";
 import {PageEvent} from "@angular/material/paginator";
-import {HallService} from "../../../../share/services/hall.service";
 import {Hall} from "../../../../share/models/hall";
 import {FormHallComponent} from "./form-hall/form-hall.component";
 import {ViewHallsComponent} from "./view-halls/view-halls.component";
 import {ActivatedRoute} from "@angular/router";
 import {concatMap} from "rxjs";
-import {FormCoachComponent} from "../../../coachs/components/coach-tabs/form-coach/form-coach.component";
+import {HALL_SERVICE, IHallService} from "../../../../share/services/i-hall.service";
 
 
 @Component({
@@ -23,7 +22,7 @@ import {FormCoachComponent} from "../../../coachs/components/coach-tabs/form-coa
     styleUrl: './hall-tabs.component.scss'
 })
 export class HallTabsComponent implements OnInit {
-  private hallService: HallService = inject(HallService);
+  private hallService: IHallService = inject(HALL_SERVICE);
   private route = inject(ActivatedRoute);
 
   hallUpdatingSignal = signal<Hall | undefined>(undefined);

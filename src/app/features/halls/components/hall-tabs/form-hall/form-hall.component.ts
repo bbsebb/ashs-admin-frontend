@@ -1,11 +1,10 @@
 import {Component, inject, input, InputSignal, OnInit, output, viewChild} from '@angular/core';
 import {FormBuilder, FormGroup, FormGroupDirective, ReactiveFormsModule, Validators} from "@angular/forms";
-import {Hall, IHall} from "../../../../../share/models/hall";
+import {Hall} from "../../../../../share/models/hall";
 import {MatCard, MatCardTitle} from "@angular/material/card";
 import {MatError, MatFormField, MatLabel} from "@angular/material/form-field";
 import {MatButton} from "@angular/material/button";
 import {MatInput} from "@angular/material/input";
-import {Address} from "../../../../../share/models/address";
 
 @Component({
     selector: 'app-form-hall',

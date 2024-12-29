@@ -1,5 +1,3 @@
-import { TrainingSession } from './training-session';
-
 class TrainingSession {
 }
 

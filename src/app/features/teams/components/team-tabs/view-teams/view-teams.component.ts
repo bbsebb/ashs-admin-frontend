@@ -1,5 +1,5 @@
 import {Component, input, output} from '@angular/core';
-import {TeamCardComponent} from "../../../../teams/components/team-tabs/team-card/team-card.component";
+import {TeamCardComponent} from "../team-card/team-card.component";
 import {MatPaginator, PageEvent} from "@angular/material/paginator";
 import {Team} from "../../../../../share/models/team";
 import {PaginatedResource} from "../../../../../share/models/hal-forms/paginated-resource";

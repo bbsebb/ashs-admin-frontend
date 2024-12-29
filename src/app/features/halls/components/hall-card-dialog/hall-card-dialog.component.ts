@@ -1,4 +1,4 @@
-import {Component, Inject, inject} from '@angular/core';
+import {Component, Inject} from '@angular/core';
 import {MAT_DIALOG_DATA} from "@angular/material/dialog";
 import {HallCardComponent} from "../hall-tabs/hall-card/hall-card.component";
 import {Hall} from "../../../../share/models/hall";

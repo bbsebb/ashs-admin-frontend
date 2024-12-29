@@ -1,11 +1,10 @@
 import {Component, computed, effect, inject, Signal} from '@angular/core';
 import {MatToolbar} from "@angular/material/toolbar";
 import {MatIcon} from "@angular/material/icon";
-import {MatAnchor, MatIconAnchor, MatIconButton} from "@angular/material/button";
-import {NgOptimizedImage} from "@angular/common";
+import {MatIconButton} from "@angular/material/button";
 import {RouterLink} from "@angular/router";
 import {ScrollDispatcher, ViewportRuler} from "@angular/cdk/overlay";
-import {Observable, scan, skip, tap} from "rxjs";
+import {Observable, scan, skip} from "rxjs";
 import {toSignal} from "@angular/core/rxjs-interop";
 import {map} from "rxjs/operators";
 
@@ -18,9 +17,6 @@ import {SidenavOpeningService} from "../services/sidenav-opening.service";
         MatToolbar,
         MatIcon,
         MatIconButton,
-        NgOptimizedImage,
-        MatAnchor,
-        MatIconAnchor,
         RouterLink
     ],
     templateUrl: './header.component.html',

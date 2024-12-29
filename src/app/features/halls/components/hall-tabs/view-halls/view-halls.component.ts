@@ -1,7 +1,5 @@
 import {Component, input, output} from '@angular/core';
-import {CoachCardComponent} from "../../../../coachs/components/coach-tabs/coach-card/coach-card.component";
 import {MatPaginator, PageEvent} from "@angular/material/paginator";
-import {Coach} from "../../../../../share/models/coach";
 import {PaginatedResource} from "../../../../../share/models/hal-forms/paginated-resource";
 import {Hall} from "../../../../../share/models/hall";
 import {HallCardComponent} from "../hall-card/hall-card.component";
@@ -9,7 +7,6 @@ import {HallCardComponent} from "../hall-card/hall-card.component";
 @Component({
     selector: 'app-view-halls',
     imports: [
-        CoachCardComponent,
         MatPaginator,
         HallCardComponent
     ],
