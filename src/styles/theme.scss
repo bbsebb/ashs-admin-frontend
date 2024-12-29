@@ -4,7 +4,8 @@
 
 // Inclusion du mixin core d'Angular Material.
 // Ce mixin inclut les styles de base nécessaires pour Angular Material, comme la réinitialisation des styles et les styles de typographie.
-@include mat.core();
+@include mat.elevation-classes();
+@include mat.app-background();
 
 // Importation d'une palette de couleurs grises personnalisée définie dans un autre fichier SCSS.
 // Cette palette est utilisée pour créer le schéma de couleurs principal du thème.
