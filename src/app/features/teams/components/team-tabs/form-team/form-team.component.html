@@ -85,8 +85,10 @@
           <mat-form-field class="full-width" appearance="outline">
             <mat-label>Sélectionner la salle</mat-label>
             <mat-select formControlName="hall" [compareWith]="compareHalls">
-              @for (hall of hallList()?.getEmbedded("halls"); track hall.id) {
-                <mat-option [value]="hall">{{ hall.name }}</mat-option>
+              @if(hallList()?.hasEmbedded("halls")) {
+                @for (hall of hallList()?.getEmbedded("halls"); track hall.id) {
+                  <mat-option [value]="hall">{{ hall.name }}</mat-option>
+                }
               }
             </mat-select>
             @if (hasError('trainingSessions.'+$index+'.hall')) {
@@ -111,8 +113,10 @@
     <mat-form-field class="full-width" appearance="outline">
       <mat-label>Sélection des entraineurs</mat-label>
       <mat-select formControlName="coaches" multiple [compareWith]="compareCoaches">
-        @for (coaches of coaches()?.getEmbedded("coaches");track coaches) {
-          <mat-option [value]="coaches">{{ coaches.name }} {{ coaches.surname}}</mat-option>
+        @if(hallList()?.hasEmbedded("coaches")) {
+          @for (coaches of coaches()?.getEmbedded("coaches");track coaches) {
+            <mat-option [value]="coaches">{{ coaches.name }} {{ coaches.surname}}</mat-option>
+          }
         }
       </mat-select>
       @if (hasError('hall')) {

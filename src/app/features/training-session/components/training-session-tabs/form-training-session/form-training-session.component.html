@@ -37,8 +37,10 @@
     <mat-form-field class="full-width" appearance="outline">
       <mat-label>Sélectionner la salle</mat-label>
       <mat-select formControlName="hall" [compareWith]="compareHalls">
-        @for (hall of hallList()?.getEmbedded("halls");track hall) {
-          <mat-option [value]="hall" >{{ hall.name }}</mat-option>
+        @if(hallList()?.hasEmbedded("halls")) {
+          @for (hall of hallList()?.getEmbedded("halls");track hall) {
+            <mat-option [value]="hall" >{{ hall.name }}</mat-option>
+          }
         }
       </mat-select>
       @if (hasError('hall')) {
