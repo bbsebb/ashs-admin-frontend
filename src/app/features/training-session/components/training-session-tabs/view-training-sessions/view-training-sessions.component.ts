@@ -7,14 +7,13 @@ import {TrainingSession} from "../../../../../share/models/training-session";
 
 
 @Component({
-  selector: 'app-view-training-sessions',
-  standalone: true,
-  imports: [
-    MatPaginator,
-    TrainingSessionCardComponent
-  ],
-  templateUrl: './view-training-sessions.component.html',
-  styleUrl: './view-training-sessions.component.scss'
+    selector: 'app-view-training-sessions',
+    imports: [
+        MatPaginator,
+        TrainingSessionCardComponent
+    ],
+    templateUrl: './view-training-sessions.component.html',
+    styleUrl: './view-training-sessions.component.scss'
 })
 export class ViewTrainingSessionsComponent {
 

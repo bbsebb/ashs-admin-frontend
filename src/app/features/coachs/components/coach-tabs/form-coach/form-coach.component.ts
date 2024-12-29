@@ -7,20 +7,19 @@ import {MatButton} from "@angular/material/button";
 import {Coach} from "../../../../../share/models/coach";
 
 @Component({
-  selector: 'app-form-coach',
-  standalone: true,
-  imports: [
-    MatCard,
-    MatCardTitle,
-    MatFormField,
-    MatInput,
-    MatLabel,
-    MatButton,
-    MatError,
-    ReactiveFormsModule
-  ],
-  templateUrl: './form-coach.component.html',
-  styleUrl: './form-coach.component.scss'
+    selector: 'app-form-coach',
+    imports: [
+        MatCard,
+        MatCardTitle,
+        MatFormField,
+        MatInput,
+        MatLabel,
+        MatButton,
+        MatError,
+        ReactiveFormsModule
+    ],
+    templateUrl: './form-coach.component.html',
+    styleUrl: './form-coach.component.scss'
 })
 export class FormCoachComponent implements OnInit {
   private readonly formDirective = viewChild.required<FormGroupDirective>('formDirective');

@@ -8,20 +8,19 @@ import {MatInput} from "@angular/material/input";
 import {Address} from "../../../../../share/models/address";
 
 @Component({
-  selector: 'app-form-hall',
-  standalone: true,
-  imports: [
-    MatCard,
-    MatCardTitle,
-    MatFormField,
-    MatInput,
-    MatLabel,
-    MatButton,
-    MatError,
-    ReactiveFormsModule
-  ],
-  templateUrl: './form-hall.component.html',
-  styleUrl: './form-hall.component.scss'
+    selector: 'app-form-hall',
+    imports: [
+        MatCard,
+        MatCardTitle,
+        MatFormField,
+        MatInput,
+        MatLabel,
+        MatButton,
+        MatError,
+        ReactiveFormsModule
+    ],
+    templateUrl: './form-hall.component.html',
+    styleUrl: './form-hall.component.scss'
 })
 export class FormHallComponent implements OnInit {
   readonly formDirective = viewChild.required<FormGroupDirective>('formDirective');

@@ -9,8 +9,8 @@ import {
 import {MatButton} from "@angular/material/button";
 
 @Component({
-  selector: 'app-confirm-dialog',
-  template: `
+    selector: 'app-confirm-dialog',
+    template: `
     <h1 mat-dialog-title>Confirmation</h1>
     <div mat-dialog-content>
       <p>{{ message }}</p>
@@ -20,13 +20,12 @@ import {MatButton} from "@angular/material/button";
       <button mat-button color="warn" (click)="onConfirm()">Confirmer</button>
     </div>
   `,
-  imports: [
-    MatDialogContent,
-    MatDialogTitle,
-    MatDialogActions,
-    MatButton
-  ],
-  standalone: true
+    imports: [
+        MatDialogContent,
+        MatDialogTitle,
+        MatDialogActions,
+        MatButton
+    ]
 })
 export class ConfirmDialogComponent {
   constructor(

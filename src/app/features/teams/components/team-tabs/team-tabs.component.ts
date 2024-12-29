@@ -9,16 +9,15 @@ import {FormTeamComponent} from "./form-team/form-team.component";
 
 
 @Component({
-  selector: 'app-team-tabs',
-  standalone: true,
-  imports: [
-    MatTab,
-    MatTabGroup,
-    ViewTeamsComponent,
-    FormTeamComponent
-  ],
-  templateUrl: './team-tabs.component.html',
-  styleUrl: './team-tabs.component.scss'
+    selector: 'app-team-tabs',
+    imports: [
+        MatTab,
+        MatTabGroup,
+        ViewTeamsComponent,
+        FormTeamComponent
+    ],
+    templateUrl: './team-tabs.component.html',
+    styleUrl: './team-tabs.component.scss'
 })
 export class TeamTabsComponent {
   teamUpdating = signal<Team | undefined>(undefined);

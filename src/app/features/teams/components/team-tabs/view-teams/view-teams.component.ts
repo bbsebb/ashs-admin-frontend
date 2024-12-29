@@ -5,14 +5,13 @@ import {Team} from "../../../../../share/models/team";
 import {PaginatedResource} from "../../../../../share/models/hal-forms/paginated-resource";
 
 @Component({
-  selector: 'app-view-teams',
-  standalone: true,
+    selector: 'app-view-teams',
     imports: [
         TeamCardComponent,
         MatPaginator
     ],
-  templateUrl: './view-teams.component.html',
-  styleUrl: './view-teams.component.scss'
+    templateUrl: './view-teams.component.html',
+    styleUrl: './view-teams.component.scss'
 })
 export class ViewTeamsComponent {
 

@@ -8,17 +8,16 @@ import {SidenavOpeningService} from "../services/sidenav-opening.service";
 
 
 @Component({
-  selector: 'app-sidenav',
-  standalone: true,
-  imports: [
-    MatSidenavModule,
-    RouterOutlet,
-    MatListItem,
-    MatNavList,
-    RouterLink
-  ],
-  templateUrl: './sidenav.component.html',
-  styleUrl: './sidenav.component.scss'
+    selector: 'app-sidenav',
+    imports: [
+        MatSidenavModule,
+        RouterOutlet,
+        MatListItem,
+        MatNavList,
+        RouterLink
+    ],
+    templateUrl: './sidenav.component.html',
+    styleUrl: './sidenav.component.scss'
 })
 export class SidenavComponent implements OnInit {
 

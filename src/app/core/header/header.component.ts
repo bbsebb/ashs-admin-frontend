@@ -13,27 +13,26 @@ import {animate, state, style, transition, trigger} from "@angular/animations";
 import {SidenavOpeningService} from "../services/sidenav-opening.service";
 
 @Component({
-  selector: 'app-header',
-  standalone: true,
-  imports: [
-    MatToolbar,
-    MatIcon,
-    MatIconButton,
-    NgOptimizedImage,
-    MatAnchor,
-    MatIconAnchor,
-    RouterLink
-  ],
-  templateUrl: './header.component.html',
-  styleUrl: './header.component.scss',
-  animations: [
-    trigger('toolbarAnimation', [
-      state('open', style({ transform: 'translateY(0px)'})),
-      state('close', style({ transform: 'translateY(-100px)'})),
-      transition('open => close',[animate('300ms ease-out')]),
-      transition('close  => open',[animate('300ms ease-in')]),
-    ]),
-  ],
+    selector: 'app-header',
+    imports: [
+        MatToolbar,
+        MatIcon,
+        MatIconButton,
+        NgOptimizedImage,
+        MatAnchor,
+        MatIconAnchor,
+        RouterLink
+    ],
+    templateUrl: './header.component.html',
+    styleUrl: './header.component.scss',
+    animations: [
+        trigger('toolbarAnimation', [
+            state('open', style({ transform: 'translateY(0px)' })),
+            state('close', style({ transform: 'translateY(-100px)' })),
+            transition('open => close', [animate('300ms ease-out')]),
+            transition('close  => open', [animate('300ms ease-in')]),
+        ]),
+    ]
 })
 
 export class HeaderComponent {

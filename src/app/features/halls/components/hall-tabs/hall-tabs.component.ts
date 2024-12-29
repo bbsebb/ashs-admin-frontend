@@ -12,16 +12,15 @@ import {FormCoachComponent} from "../../../coachs/components/coach-tabs/form-coa
 
 
 @Component({
-  selector: 'app-hall-tabs',
-  standalone: true,
-  imports: [
-    MatTabGroup,
-    MatTab,
-    FormHallComponent,
-    ViewHallsComponent
-  ],
-  templateUrl: './hall-tabs.component.html',
-  styleUrl: './hall-tabs.component.scss'
+    selector: 'app-hall-tabs',
+    imports: [
+        MatTabGroup,
+        MatTab,
+        FormHallComponent,
+        ViewHallsComponent
+    ],
+    templateUrl: './hall-tabs.component.html',
+    styleUrl: './hall-tabs.component.scss'
 })
 export class HallTabsComponent implements OnInit {
   private hallService: HallService = inject(HallService);

@@ -8,16 +8,15 @@ import {PaginatedResource} from "../../../../share/models/hal-forms/paginated-re
 import {PageEvent} from "@angular/material/paginator";
 
 @Component({
-  selector: 'app-coach-tabs',
-  standalone: true,
-  imports: [
-    MatTabGroup,
-    MatTab,
-    ViewCoachesComponent,
-    FormCoachComponent
-  ],
-  templateUrl: './coach-tabs.component.html',
-  styleUrl: './coach-tabs.component.scss'
+    selector: 'app-coach-tabs',
+    imports: [
+        MatTabGroup,
+        MatTab,
+        ViewCoachesComponent,
+        FormCoachComponent
+    ],
+    templateUrl: './coach-tabs.component.html',
+    styleUrl: './coach-tabs.component.scss'
 })
 export class CoachTabsComponent {
 

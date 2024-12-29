@@ -8,14 +8,13 @@ import {MatDialog} from "@angular/material/dialog";
 
 
 @Component({
-  selector: 'app-view-coachs',
-  standalone: true,
-  imports: [
-    CoachCardComponent,
-    MatPaginator
-  ],
-  templateUrl: './view-coaches.component.html',
-  styleUrl: './view-coaches.component.scss'
+    selector: 'app-view-coachs',
+    imports: [
+        CoachCardComponent,
+        MatPaginator
+    ],
+    templateUrl: './view-coaches.component.html',
+    styleUrl: './view-coaches.component.scss'
 })
 export class ViewCoachesComponent {
   dialog:MatDialog = inject(MatDialog);

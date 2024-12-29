@@ -8,16 +8,15 @@ import {ViewTrainingSessionsComponent} from "./view-training-sessions/view-train
 import {FormTrainingSessionComponent} from "./form-training-session/form-training-session.component";
 
 @Component({
-  selector: 'app-training-session-tabs',
-  standalone: true,
-  imports: [
-    MatTabGroup,
-    MatTab,
-    ViewTrainingSessionsComponent,
-    FormTrainingSessionComponent
-  ],
-  templateUrl: './training-session-tabs.component.html',
-  styleUrl: './training-session-tabs.component.scss'
+    selector: 'app-training-session-tabs',
+    imports: [
+        MatTabGroup,
+        MatTab,
+        ViewTrainingSessionsComponent,
+        FormTrainingSessionComponent
+    ],
+    templateUrl: './training-session-tabs.component.html',
+    styleUrl: './training-session-tabs.component.scss'
 })
 export class TrainingSessionTabsComponent {
   trainingSessionUpdatingSignal = signal<TrainingSession | undefined>(undefined);

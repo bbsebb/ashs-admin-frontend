@@ -4,13 +4,12 @@ import {HallCardComponent} from "../hall-tabs/hall-card/hall-card.component";
 import {Hall} from "../../../../share/models/hall";
 
 @Component({
-  selector: 'app-hall-card-dialog',
-  standalone: true,
-  imports: [
-    HallCardComponent
-  ],
-  templateUrl: './hall-card-dialog.component.html',
-  styleUrl: './hall-card-dialog.component.scss'
+    selector: 'app-hall-card-dialog',
+    imports: [
+        HallCardComponent
+    ],
+    templateUrl: './hall-card-dialog.component.html',
+    styleUrl: './hall-card-dialog.component.scss'
 })
 export class HallCardDialogComponent {
 

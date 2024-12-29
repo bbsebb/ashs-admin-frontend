@@ -4,15 +4,14 @@ import {SidenavComponent} from "../sidenav/sidenav.component";
 
 
 @Component({
-  selector: 'app-main-content',
-  standalone: true,
-  imports: [
-    HeaderComponent,
-    SidenavComponent,
-    SidenavComponent
-  ],
-  templateUrl: './main-content.component.html',
-  styleUrl: './main-content.component.scss'
+    selector: 'app-main-content',
+    imports: [
+        HeaderComponent,
+        SidenavComponent,
+        SidenavComponent
+    ],
+    templateUrl: './main-content.component.html',
+    styleUrl: './main-content.component.scss'
 })
 export class MainContentComponent {
 

@@ -22,28 +22,27 @@ import {MatIcon} from "@angular/material/icon";
 import {timeSlotValidator} from "../../../../../share/validators/time-slot.validator";
 
 @Component({
-  selector: 'app-form-team',
-  standalone: true,
-  imports: [
-    MatCard,
-    MatCardTitle,
-    ReactiveFormsModule,
-    MatFormField,
-    MatOption,
-    MatLabel,
-    MatSelect,
-    MatButton,
-    MatError,
-    MatInput,
-    MatIcon,
-    DayOfWeekPipe,
-    TimePipe,
-    MatCardActions,
-    MatMiniFabButton,
-    MatIconButton
-  ],
-  templateUrl: './form-team.component.html',
-  styleUrl: './form-team.component.scss'
+    selector: 'app-form-team',
+    imports: [
+        MatCard,
+        MatCardTitle,
+        ReactiveFormsModule,
+        MatFormField,
+        MatOption,
+        MatLabel,
+        MatSelect,
+        MatButton,
+        MatError,
+        MatInput,
+        MatIcon,
+        DayOfWeekPipe,
+        TimePipe,
+        MatCardActions,
+        MatMiniFabButton,
+        MatIconButton
+    ],
+    templateUrl: './form-team.component.html',
+    styleUrl: './form-team.component.scss'
 })
 export class FormTeamComponent implements OnInit {
   readonly formDirective = viewChild.required<FormGroupDirective>('formDirective');

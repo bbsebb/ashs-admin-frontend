@@ -6,15 +6,14 @@ import {endWith} from "rxjs";
 import {MatIcon} from "@angular/material/icon";
 
 @Component({
-  selector: 'app-coach-card',
-  standalone: true,
-  imports: [
-    MatCardModule,
-    MatButtonModule,
-    MatIcon
-  ],
-  templateUrl: './coach-card.component.html',
-  styleUrl: './coach-card.component.scss'
+    selector: 'app-coach-card',
+    imports: [
+        MatCardModule,
+        MatButtonModule,
+        MatIcon
+    ],
+    templateUrl: './coach-card.component.html',
+    styleUrl: './coach-card.component.scss'
 })
 export class CoachCardComponent {
   _coach: InputSignal<Coach> = input.required<Coach>({alias: 'coach'});

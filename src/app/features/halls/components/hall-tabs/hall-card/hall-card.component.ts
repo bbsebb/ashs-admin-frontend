@@ -34,22 +34,21 @@ import {MatDialog} from "@angular/material/dialog";
 
 
 @Component({
-  selector: 'app-hall-card',
-  standalone: true,
-  imports: [
-    MatButton,
-    MatCard,
-    MatCardActions,
-    MatCardAvatar,
-    MatCardHeader,
-    MatCardSubtitle,
-    MatCardTitle,
-    MatCardContent,
-    GoogleMapsModule,
-    GoogleMap
-  ],
-  templateUrl: './hall-card.component.html',
-  styleUrl: './hall-card.component.scss'
+    selector: 'app-hall-card',
+    imports: [
+        MatButton,
+        MatCard,
+        MatCardActions,
+        MatCardAvatar,
+        MatCardHeader,
+        MatCardSubtitle,
+        MatCardTitle,
+        MatCardContent,
+        GoogleMapsModule,
+        GoogleMap
+    ],
+    templateUrl: './hall-card.component.html',
+    styleUrl: './hall-card.component.scss'
 })
 export class HallCardComponent {
   @ViewChild(MapInfoWindow) infoWindow: MapInfoWindow | undefined;

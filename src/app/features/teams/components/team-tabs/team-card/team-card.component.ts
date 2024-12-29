@@ -13,23 +13,22 @@ import {Hall} from "../../../../../share/models/hall";
 import {ConfirmDialogComponent} from "../../../../../share/components/dialog/confirm-dialog.component";
 
 @Component({
-  selector: 'app-team-card',
-  standalone: true,
-  imports: [
-    MatButton,
-    MatCard,
-    MatCardActions,
-    MatCardHeader,
-    MatCardTitle,
-    MatCardContent,
-    DayOfWeekPipe,
-    CategoryPipe,
-    GenderPipe,
-    TimePipe,
-    MatIcon
-  ],
-  templateUrl: './team-card.component.html',
-  styleUrl: './team-card.component.scss'
+    selector: 'app-team-card',
+    imports: [
+        MatButton,
+        MatCard,
+        MatCardActions,
+        MatCardHeader,
+        MatCardTitle,
+        MatCardContent,
+        DayOfWeekPipe,
+        CategoryPipe,
+        GenderPipe,
+        TimePipe,
+        MatIcon
+    ],
+    templateUrl: './team-card.component.html',
+    styleUrl: './team-card.component.scss'
 })
 export class TeamCardComponent {
   dialog:MatDialog = inject(MatDialog);

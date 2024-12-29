@@ -7,15 +7,14 @@ import {Hall} from "../../../../../share/models/hall";
 import {HallCardComponent} from "../hall-card/hall-card.component";
 
 @Component({
-  selector: 'app-view-halls',
-  standalone: true,
-  imports: [
-    CoachCardComponent,
-    MatPaginator,
-    HallCardComponent
-  ],
-  templateUrl: './view-halls.component.html',
-  styleUrl: './view-halls.component.scss'
+    selector: 'app-view-halls',
+    imports: [
+        CoachCardComponent,
+        MatPaginator,
+        HallCardComponent
+    ],
+    templateUrl: './view-halls.component.html',
+    styleUrl: './view-halls.component.scss'
 })
 export class ViewHallsComponent {
 

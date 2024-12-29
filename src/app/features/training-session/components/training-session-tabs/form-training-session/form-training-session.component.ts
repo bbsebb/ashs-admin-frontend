@@ -20,24 +20,23 @@ import {timeSlotValidator} from "../../../../../share/validators/time-slot.valid
 
 
 @Component({
-  selector: 'app-form-training-session',
-  standalone: true,
-  imports: [
-    MatCard,
-    MatCardTitle,
-    ReactiveFormsModule,
-    MatFormField,
-    MatOption,
-    MatLabel,
-    MatSelect,
-    MatButton,
-    MatError,
-    MatInput,
-    GoogleMapsModule,
-    DayOfWeekPipe
-  ],
-  templateUrl: './form-training-session.component.html',
-  styleUrl: './form-training-session.component.scss'
+    selector: 'app-form-training-session',
+    imports: [
+        MatCard,
+        MatCardTitle,
+        ReactiveFormsModule,
+        MatFormField,
+        MatOption,
+        MatLabel,
+        MatSelect,
+        MatButton,
+        MatError,
+        MatInput,
+        GoogleMapsModule,
+        DayOfWeekPipe
+    ],
+    templateUrl: './form-training-session.component.html',
+    styleUrl: './form-training-session.component.scss'
 })
 export class FormTrainingSessionComponent implements OnInit {
   private readonly fb: FormBuilder = inject(FormBuilder);

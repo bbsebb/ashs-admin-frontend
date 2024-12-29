@@ -23,25 +23,24 @@ import {ConfirmDialogComponent} from "../../../../../share/components/dialog/con
 
 
 @Component({
-  selector: 'app-training-session-card',
-  standalone: true,
-  imports: [
-    MatButton,
-    MatCardModule,
-    MatCardActions,
-    MatCardAvatar,
-    MatCardHeader,
-    MatCardTitle,
-    MatCardContent,
-    MatIcon,
-    DurationPipe,
-    DayOfWeekPipe,
-    TimePipe,
-    MatDivider,
-    HallCardComponent
-  ],
-  templateUrl: './training-session-card.component.html',
-  styleUrl: './training-session-card.component.scss'
+    selector: 'app-training-session-card',
+    imports: [
+        MatButton,
+        MatCardModule,
+        MatCardActions,
+        MatCardAvatar,
+        MatCardHeader,
+        MatCardTitle,
+        MatCardContent,
+        MatIcon,
+        DurationPipe,
+        DayOfWeekPipe,
+        TimePipe,
+        MatDivider,
+        HallCardComponent
+    ],
+    templateUrl: './training-session-card.component.html',
+    styleUrl: './training-session-card.component.scss'
 })
 export class TrainingSessionCardComponent {
   dialog:MatDialog = inject(MatDialog);
