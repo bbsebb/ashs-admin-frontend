@@ -5,6 +5,8 @@
         <app-team-card [team]="team" (deleteTeam)="onDeleteTeamEvent($event)"
                        (modifyTeam)="onModifyTeamEvent($event)"></app-team-card>
       }
+    } @else {
+      <p>Aucune équipe</p>
     }
   </div>
 

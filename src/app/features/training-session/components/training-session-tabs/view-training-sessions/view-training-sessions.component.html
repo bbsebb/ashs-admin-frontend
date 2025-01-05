@@ -6,6 +6,8 @@
                                  (deleteTrainingSession)="onDeleteTrainingSessionEvent($event)"
                                  (modifyTrainingSession)="onModifyTrainingSessionEvent($event)"></app-training-session-card>
       }
+    } @else {
+      <p>Aucun créneau d'entrainement</p>
     }
   </div>
 
