@@ -4,6 +4,8 @@
       @for(coach of _paginatedResourceCoaches().getEmbedded("coaches")  ; track coach.getSelfLink().href) {
         <app-coach-card [coach]="coach" (deleteCoach)="onDeleteCoachEvent($event)" (modifyCoach)="onModifyCoachEvent($event)"></app-coach-card>
       }
+    } @else {
+      <p>Aucun entraineur</p>
     }
   </div>
 

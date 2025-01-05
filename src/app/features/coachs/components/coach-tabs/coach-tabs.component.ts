@@ -57,15 +57,15 @@ export class CoachTabsComponent {
 
   onDeleteCoach(coach: Coach) {
     this.coachService.delete(coach).subscribe({
-      next: (value) => this.getCoaches(), //refresh
+      next: () => this.getCoaches(), //refresh
       error: (err) => console.error('Erreur : ', err)
     });
   }
 
   onSubmitUpdateCoach(coach: Coach) {
     this.coachService.update(coach).subscribe({
-      next: (value) => this.getCoaches(), //refresh
-      error: (err) => this.getCoaches(),
+      next: () => this.getCoaches(), //refresh
+      error: () => this.getCoaches(),
       complete: () => {
         this.coachFormComponentSignal()?.reset()
         this.coachUpdatingSignal.set(undefined);
@@ -76,8 +76,8 @@ export class CoachTabsComponent {
 
   onSubmitSaveCoach(coach: Coach) {
     this.coachService.save(coach,this.paginatedResourceSignal().getTemplate("createCoach").target).subscribe({
-      next: (value) => this.getCoaches(), //refresh
-      error: (err) => this.getCoaches(),
+      next: () => this.getCoaches(), //refresh
+      error: () => this.getCoaches(),
       complete: () => {
         this.coachFormComponentSignal()?.reset()
         this.selectedTabIndex = 0

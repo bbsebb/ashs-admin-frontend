@@ -4,6 +4,8 @@
       @for(hall of paginatedResourceHallsSignal().getEmbedded("halls")  ; track hall.getSelfLink().href) {
         <app-hall-card [hall]="hall" (deleteHall)="onDeleteHallEvent($event)" (modifyHall)="onModifyHallEvent($event)"></app-hall-card>
       }
+    } @else {
+      <p>Aucune salle</p>
     }
   </div>
 
