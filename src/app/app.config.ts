@@ -13,9 +13,21 @@ import {TEAM_SERVICE} from "./share/services/i-team.service";
 import {TeamService} from "./share/services/team.service";
 import {TRAINING_SESSION_SERVICE} from "./share/services/i-training-session.service";
 import {TrainingSessionService} from "./share/services/training-session.service";
+import {provideKeycloak} from "keycloak-angular";
 
 export const appConfig: ApplicationConfig = {
   providers: [
+    provideKeycloak({
+      config: {
+        url: 'http://localhost:8079',
+        realm: 'ashs',
+        clientId: 'app-angular'
+      },
+      initOptions: {
+        onLoad: 'check-sso',
+        silentCheckSsoRedirectUri: window.location.origin + '/silent-check-sso.html'
+      }
+    }),
     provideRouter(routes),
     provideAnimationsAsync(),
     provideHttpClient(withInterceptors([apiKeyInterceptor])),

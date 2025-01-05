@@ -10,7 +10,7 @@ import {map} from "rxjs/operators";
 
 import {animate, state, style, transition, trigger} from "@angular/animations";
 import {SidenavOpeningService} from "../services/sidenav-opening.service";
-
+import Keycloak from 'keycloak-js';
 @Component({
     selector: 'app-header',
     imports: [
@@ -34,6 +34,7 @@ import {SidenavOpeningService} from "../services/sidenav-opening.service";
 export class HeaderComponent {
   // Injection du service pour l'ouverture du volet latéral
   protected readonly sidenavOpeningService :SidenavOpeningService = inject(SidenavOpeningService);
+  private readonly keycloak = inject(Keycloak);
   // Signal pour gérer l'affichage de la barre d'outils
   showToolbar: Signal<boolean>;
   private readonly topLimitShowToolbar = 349;
@@ -69,4 +70,11 @@ export class HeaderComponent {
     );
   }
 
+  login() {
+    this.keycloak.login().then(r => (console.log(r)));
+  }
+
+  logout() {
+    this.keycloak.logout().then(r => (console.log(r)));
+  }
 }

@@ -16,11 +16,14 @@
 
       </a>
 
-<!--      <span class="right-menu">
-        <button  mat-icon-button  aria-label="icon-button with login icon">
+    <span class="right-menu">
+        <button  mat-icon-button (click)="login()"  aria-label="icon-button with login icon">
         <mat-icon>login</mat-icon>
         </button>
-      </span>-->
+      <button  mat-icon-button (click)="logout()"  aria-label="icon-button with logout icon">
+        <mat-icon>logout</mat-icon>
+        </button>
+      </span>
 
   </mat-toolbar>
 
