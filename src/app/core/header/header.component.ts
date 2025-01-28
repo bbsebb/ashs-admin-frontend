@@ -1,4 +1,4 @@
-import {Component, computed, effect, inject, Signal} from '@angular/core';
+import {Component, computed, effect, inject, OnInit, Signal} from '@angular/core';
 import {MatToolbar} from "@angular/material/toolbar";
 import {MatIcon} from "@angular/material/icon";
 import {MatIconButton} from "@angular/material/button";
@@ -10,31 +10,34 @@ import {map} from "rxjs/operators";
 
 import {animate, state, style, transition, trigger} from "@angular/animations";
 import {SidenavOpeningService} from "../services/sidenav-opening.service";
-import Keycloak from 'keycloak-js';
-@Component({
-    selector: 'app-header',
-    imports: [
-        MatToolbar,
-        MatIcon,
-        MatIconButton,
-        RouterLink
-    ],
-    templateUrl: './header.component.html',
-    styleUrl: './header.component.scss',
-    animations: [
-        trigger('toolbarAnimation', [
-            state('open', style({ transform: 'translateY(0px)' })),
-            state('close', style({ transform: 'translateY(-100px)' })),
-            transition('open => close', [animate('300ms ease-out')]),
-            transition('close  => open', [animate('300ms ease-in')]),
-        ]),
-    ]
-})
+import {User} from "../../share/models/user";
+import {AuthService} from "../../share/services/auth.service";
 
-export class HeaderComponent {
+@Component({
+  selector: 'app-header',
+  imports: [
+    MatToolbar,
+    MatIcon,
+    MatIconButton,
+    RouterLink
+  ],
+  templateUrl: './header.component.html',
+  styleUrl: './header.component.scss',
+  animations: [
+    trigger('toolbarAnimation', [
+      state('open', style({transform: 'translateY(0px)'})),
+      state('close', style({transform: 'translateY(-100px)'})),
+      transition('open => close', [animate('300ms ease-out')]),
+      transition('close  => open', [animate('300ms ease-in')]),
+    ]),
+  ]
+})
+export class HeaderComponent implements OnInit{
   // Injection du service pour l'ouverture du volet latéral
   protected readonly sidenavOpeningService :SidenavOpeningService = inject(SidenavOpeningService);
-  private readonly keycloak = inject(Keycloak);
+  private readonly authService = inject(AuthService);
+  user!:User|undefined;
+  authenticated = false;
   // Signal pour gérer l'affichage de la barre d'outils
   showToolbar: Signal<boolean>;
   private readonly topLimitShowToolbar = 349;
@@ -48,6 +51,18 @@ export class HeaderComponent {
     effect(() => {
       this.showToolbar();
     });
+
+    effect(() => {
+      this.authenticated = this.authService.isLoggedInSignal();
+    });
+    effect(() => {
+      this.user = this.authService.user();
+    });
+
+  }
+
+  async ngOnInit() {
+
   }
   // Création d'un flux observable pour la position de défilement de la fenêtre
   getScrollTop(scrollDispatcher:ScrollDispatcher,viewportRuler:ViewportRuler): Observable<number> {
@@ -71,10 +86,10 @@ export class HeaderComponent {
   }
 
   login() {
-    this.keycloak.login().then(r => (console.log(r)));
+    this.authService.login();
   }
 
   logout() {
-    this.keycloak.logout().then(r => (console.log(r)));
+    this.authService.logout();
   }
 }

@@ -17,12 +17,18 @@
       </a>
 
     <span class="right-menu">
+      @if(!authenticated) {
         <button  mat-icon-button (click)="login()"  aria-label="icon-button with login icon">
         <mat-icon>login</mat-icon>
         </button>
+
+      }
+      @if(authenticated) {
+        <p>{{user?.name}}</p>
       <button  mat-icon-button (click)="logout()"  aria-label="icon-button with logout icon">
         <mat-icon>logout</mat-icon>
         </button>
+      }
       </span>
 
   </mat-toolbar>

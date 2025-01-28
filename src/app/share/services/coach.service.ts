@@ -58,6 +58,9 @@ export class CoachService implements ICoachService {
   }
 
   delete(coach: Coach): Observable<void> {
+
+    console.log(coach.getTemplate("deleteCoach"));
+    console.log(coach.getSelfLink());
     return this.http.delete<void>(coach.getTemplate("deleteCoach").target ?? coach.getSelfLink().href).pipe(
       catchError((error: HttpErrorResponse) => {
         this.errorService.handleError(error);
