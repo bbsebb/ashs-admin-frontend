@@ -12,7 +12,6 @@ import {Hall} from "../../../../../share/models/hall";
 import {HallService} from "../../../../../share/services/hall.service";
 import {toSignal} from "@angular/core/rxjs-interop";
 import {PaginatedResource} from "../../../../../share/models/hal-forms/paginated-resource";
-import {GoogleMapsModule} from "@angular/google-maps";
 import {DayOfWeekPipe} from "../../../../../share/pipes/day-of-week.pipe";
 import {Router} from "@angular/router";
 import {timeSlotValidator} from "../../../../../share/validators/time-slot.validator";
@@ -31,7 +30,6 @@ import {timeSlotValidator} from "../../../../../share/validators/time-slot.valid
         MatButton,
         MatError,
         MatInput,
-        GoogleMapsModule,
         DayOfWeekPipe
     ],
     templateUrl: './form-training-session.component.html',

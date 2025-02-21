@@ -1,5 +1,6 @@
 @use '@angular/material' as mat;
 @use 'styles/theme-colors' as variables;
+@use 'mapbox-gl/dist/mapbox-gl.css';
 /* You can add global styles to this file, and also import other style files */
 html {
   @include mat.theme((

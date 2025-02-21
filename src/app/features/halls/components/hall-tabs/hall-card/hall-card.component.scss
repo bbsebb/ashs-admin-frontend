@@ -1,3 +1,4 @@
+
 mat-card {
   width: 400px;
   margin: 20px auto;
@@ -14,50 +15,15 @@ mat-card {
 
 
 
-  google-map {
-    /* Style pour le conteneur de l'infowindow */
-    .info-window-container {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      font-family: Arial, sans-serif;
-      padding: 10px;
-      max-width: 200px;
-    }
 
-    /* Titre de l'infowindow */
 
-    /* Adresse dans l'infowindow */
-    .info-window-address {
-      font-size: 0.9em;
-      color: #333;
-      margin: 2px 0;
-    }
-
-    /* Lien vers Google Maps */
-    .info-window-link {
-      text-decoration: none;
-      margin-top: 10px;
-      width: 100%;
-      text-align: center;
-    }
-
-    /* Bouton stylé pour ouvrir Google Maps */
-    .info-window-button {
-      background-color: #3f51b5;
-      color: white;
-      border: none;
-      border-radius: 4px;
-      padding: 8px 12px;
-      font-size: 0.9em;
-      cursor: pointer;
-      width: 100%;
-    }
-
-    .info-window-button:hover {
-      background-color: #2c387e;
-    }
-  }
 }
 
 
+.map-container {
+  display: block;
+  width: 100%;
+  height: 200px; // Vous pouvez ajuster la hauteur selon vos besoins.
+  border-radius: 4px; // Ajoute un coin arrondi, similaire à mat-card-image par défaut.
+  overflow: hidden; // Assure que le contenu du mgl-map ne dépasse pas son conteneur.
+}
