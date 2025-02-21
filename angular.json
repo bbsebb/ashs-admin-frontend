@@ -33,6 +33,7 @@
               }
             ],
             "styles": [
+              "mapbox-gl/dist/mapbox-gl.css",
               "src/styles.scss"
             ],
             "scripts": [],
